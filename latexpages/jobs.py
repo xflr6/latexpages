@@ -1,6 +1,8 @@
 # jobs.py - parse .ini-style config file into function call args
 
 import os
+import shlex
+from functools import partial
 
 from ._compat import ConfigParser
 
@@ -13,6 +15,8 @@ class Job(object):
     """INI-file giving the document collection parts and how to combine them."""
 
     _defaults = tools.current_path('settings.ini')
+
+    _sections = ('make', 'parts', 'template', 'substitute', 'compile', 'paginate')
 
     @staticmethod
     def _get_string(config, section, option, optional=False, default=None):
@@ -38,6 +42,13 @@ class Job(object):
                 % (option, section))
         return value
 
+    def _get_path(self, filename, default=None):
+        if filename:
+            filepath = os.path.join(self.config_dir, filename)
+            return os.path.realpath(filepath)
+        else:
+            return default
+
     def __init__(self, filename, engine=None, cleanup=True):
         cfg = ConfigParser()
         if not os.path.exists(filename):
@@ -47,57 +58,91 @@ class Job(object):
 
         self.config_dir = os.path.dirname(filename)
 
-        string, lst = self._get_string, self._get_list
+        for section in self._sections:
+            getters = {
+                'string': partial(self._get_string, cfg, section),
+                'lst': partial(self._get_list, cfg, section),
+                'boolean': partial(cfg.getboolean, section),
+                'items': partial(cfg.items, section),
+            }
+            getattr(self, '_parse_%s' % section)(**getters)
 
-        self.name = string(cfg, 'make', 'name')
-        self.directory = string(cfg, 'make', 'directory')
-        self.two_up = string(cfg, 'make', 'two_up', optional=True)
-        self.make_two_up = cfg.getboolean('make', 'make_two_up')
+        self.engine = engine
+        self.cleanup = cleanup
 
-        front = lst(cfg, 'parts', 'frontmatter', optional=True)
-        front_name = string(cfg, 'make', 'frontmatter')
+    def _parse_make(self, string, boolean, **kwargs):
+        self.name = string('name')
+        self.directory = string('directory')
 
-        main = lst(cfg, 'parts', 'mainmatter')
-        main_name = string(cfg, 'make', 'mainmatter')
+        self.two_up = string('two_up', optional=True)
+        self.make_two_up = boolean('make_two_up')
 
-        extras = lst(cfg, 'parts', 'extras', optional=True)
-        extras_name = string(cfg, 'make', 'extras')
+        self._front_name = string('frontmatter')
+        self._main_name = string('mainmatter')
+        self._extras_name = string('extras')
 
-        dvips = set(lst(cfg, 'parts', 'use_dvips', optional=True))
+    def _parse_parts(self, lst, boolean, **kwargs):
+        front = lst('frontmatter', optional=True)
+        main = lst('mainmatter')
+        extras = lst('extras', optional=True)
 
         dirs = front + main + extras
+
+        dvips = set(lst('use_dvips', optional=True))
+
         unknown = sorted(dvips.difference(dirs))
         if unknown:
             raise ValueError(unknown)
+
         files = [os.path.join(self.config_dir, d, d + '.tex') for d in dirs]
         notfound = [f for f in files if not os.path.isfile(f)]
         if notfound:
             raise ValueError(notfound)
 
-        self._groups = [(front, front_name), (main, main_name), (extras, extras_name)]
+        self._groups = [(front, self._front_name),
+            (main, self._main_name), (extras, self._extras_name)]
         self._dvips = dvips
-        self._first_to_front = cfg.getboolean('parts', 'first_to_front')
+        self._first_to_front = boolean('first_to_front')
 
-        template = string(cfg, 'template', 'filename', optional=True)
-        if template:
-            template = os.path.realpath(template)
-        self.template = template
+    def _parse_template(self, string, **kwargs):
+        self.template = self._get_path(string('filename', optional=True))
+        self.template_two_up = self._get_path(
+            string('filename_two_up', optional=True), self.template)
 
-        self.documentclass = string(cfg, 'template', 'class')
+        self.documentclass = string('class')
+
         self.documentopts = {
-            False: string(cfg, 'template', 'options', optional=True, default=''),
-            True: string(cfg, 'template', 'options_two_up', optional=True, default=''),
+            False: string('options', optional=True, default=''),
+            True: string('options_two_up', optional=True, default=''),
         }
 
         self.includepdfopts = {
-            False: string(cfg, 'template', 'include', optional=True, default=''),
-            True: string(cfg, 'template', 'include_two_up', optional=True, default=''),
+            False: string('include', optional=True, default=''),
+            True: string('include_two_up', optional=True, default=''),
         }
 
-        self.context = {k: v.strip() for k, v in cfg.items('substitute')}
+    def _parse_substitute(self, items, **kwargs):
+        self.context = {k: v.strip() for k, v in items()}
 
-        self.engine = engine
-        self.cleanup = cleanup
+    def _parse_compile(self, string, **kwargs):
+        split = lambda key: shlex.split(string(key, optional=True, default=''))
+        self.compile_opts = {
+            'latexmk': split('latexmk'),
+            'texify': split('texify'),
+            'dvips': split('dvips'),
+            'ps2pdf': split('ps2pdf'),
+        }
+
+    def _parse_paginate(self, string, **kwargs):
+        self.paginate_update = string('update')
+
+        target = string('contents', optional=True)
+        if target:
+            self.paginate_target = os.path.join(target, '%s.tex' % target)
+        else:
+            self.paginate_target = ''
+
+        self.paginate_replace = string('replace')
 
     def _iter_parts(self, groups):
         for parts, tmpl in groups:
@@ -117,6 +162,14 @@ class Job(object):
             dvips = part in self._dvips
             yield self, part, filename, dvips
 
+    def to_update(self):
+        mainmatter = self._groups[1][0]
+        parts = mainmatter[1:] if self._first_to_front else mainmatter
+        for part in parts:
+            source = os.path.join(part, '%s.tex' % part)
+            pdf = os.path.join(part, '%s.pdf' % part)
+            yield source, pdf
+
     def to_copy(self):
         for part, name in self._iter_parts(self._groups):
             source = os.path.join(part, '%s.pdf' % part)
@@ -129,10 +182,10 @@ class Job(object):
         filenames = [name for _, name in self._iter_parts(self._groups[1:-1])]
         if self._first_to_front:
             prelims.append(filenames.pop(0))
-        yield self, outname, prelims, filenames, False
+        yield self, outname, self.template, prelims, filenames, False
 
         if self.make_two_up:
             outname = self.two_up
             prelims = []
             filenames = [name for _, name in self._iter_parts(self._groups[:-1])]
-            yield self, outname, prelims, filenames, True
+            yield self, outname, self.template_two_up, prelims, filenames, True

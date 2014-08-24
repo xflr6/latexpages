@@ -25,6 +25,8 @@ This package runs under Python 2.7 and 3.3+, use pip_ to install:
 The compilation requires a LaTeX distribution (e.g. `TeX Live`_ or MikTeX_) and
 either latexmk_ or MikTeX's texify_ utility being available on your system.
 
+The automatic page numbering requires the _pdftk command-line utility.
+
 
 Usage
 -----
@@ -79,21 +81,104 @@ Check the usage of the ``latexpages`` command:
 .. code:: bash
 
     $ latexpages --help
-    usage: latexpages [-h] [--version] [-c latexmk|texify] [--keep]
+    usage: latexpages [-h] [--version] [-c {latexmk,texify}] [--keep]
                       filename [processes]
     
     Compiles and combines LaTeX docs into a single PDF file
     
     positional arguments:
-      filename           .ini-style file configuring the parts and output options
-      processes          number of parallel processes to use (default: one per
-                         core)
+      filename             INI file configuring the parts and output options
+      processes            number of parallel processes (default: one per core)
     
     optional arguments:
-      -h, --help         show this help message and exit
-      --version          show program's version number and exit
-      -c latexmk|texify  use latexmk.pl or texify (default: guess from platform)
-      --keep             keep combination document(s) and their auxiliary files
+      -h, --help           show this help message and exit
+      --version            show program's version number and exit
+      -c {latexmk,texify}  use latexmk.pl or texify (default: guess from platform)
+      --keep               keep combination document(s) and their auxiliary files
+
+
+Pagination
+----------
+
+The following command goes trough all main documents and **updates the page
+number** in the first ``\setcounter{page}{<number>}`` line of the source
+according to the page count of the preceding documents' compiled PDFs.
+
+.. code:: bash
+
+    $ latexpages-paginate collection.ini
+
+Make sure the ``pdftk`` executable is available on your systems' path.
+
+To use a different pattern for finding the ``\setcounter`` lines, set the
+``update`` option in the ``paginate`` section of your INI file to a suitable
+`regular expression`_.
+
+.. code:: ini
+
+    [paginate]
+    update = \\setcounter\{page\}\{(\d+)\}
+
+
+To also update the page numbers in your **table of contents**, put the
+corresponding part name in the ``paginate`` section of your INI file.
+
+Directory structure:
+
+::
+
+    collection/
+        collection.ini
+        prelims/
+            prelims.tex
+        article1/
+            article1.tex
+            ...
+
+Configuration:
+
+.. code:: ini
+
+    [parts]
+    frontmatter =
+      prelims
+    mainmatter = 
+      article1
+      article2
+
+    [paginate]
+    contents = prelims
+
+By default, ``latexpages-paginate`` will search and update
+``\startpage{<number>}`` lines in the source. To use this as marker, define and
+use a corresponding LaTeX-command in your table of contents, e.g.
+``\newcommand{\startpage}[1]{#1}``. A complete example is in the `example
+directory`_
+
+To use a different pattern for finding the table of contents lines, change
+the `regular expression`_ in the ``replace`` option.
+
+.. code:: ini
+
+    [paginate]
+    replace = \\startpage\{(\d+)\}
+
+
+Check the usage of the ``latexpages-paginate`` command:
+
+.. code:: bash
+
+    $ latexpages-paginate --help
+    usage: latexpages-paginate [-h] filename
+    
+    Computes and updates start page numbers in compiled parts and contents
+    
+    positional arguments:
+      filename    INI file configuring the parts and paginate options
+    
+    optional arguments:
+      -h, --help  show this help message and exit
+      --version   show program's version number and exit
 
 
 Advanced options
@@ -102,7 +187,8 @@ Advanced options
 Below are annotated INI file sections showing the **default options** for all
 available configuration settings.
 
-The ``make`` section sets the names and name templates_ for the results:
+The ``make`` section sets the **names** and file name templates_ for the
+results:
 
 .. code:: ini
 
@@ -145,7 +231,8 @@ and/or include:
 
 
 The ``substitute`` section fills the template that is used to create the
-combination document. Currently this allows to set the PDF **meta data**:
+combination document. With the default template, this allows to set the PDF
+**meta data**:
 
 .. code:: ini
 
@@ -154,17 +241,19 @@ combination document. Currently this allows to set the PDF **meta data**:
     author =       # pdfauthor
     title =        # pdftitle
     subject =      # pdfsubject
+    keywords =     # pdfkeywords
 
 
-Finally, the ``template`` section allows to customize the details of the
-**combination document**:
+The ``template`` section allows to customize the details of the **combination
+document**:
 
 .. code:: ini
 
     [template]
-    filename =        # use a custom template
+    filename =         # use a custom template
+    filename_two_up =  # different template for 2-up version
     
-    class = scrartcl  # use this documentclass
+    class = scrartcl   # use this documentclass
     
     # documentclass options for combination and 2-up version
     options = paper=a5    
@@ -173,6 +262,30 @@ Finally, the ``template`` section allows to customize the details of the
     # includepdfmerge options for combination and 2-up version
     include = fitpaper
     include_two_up = nup=2x1,openright
+
+
+The ``compile`` section allows to change the **invocation options** of the
+compilation commands used.
+
+.. code:: ini
+
+    [compile]
+    latexmk = -silent                   # less verbose 
+    
+    texify = --batch --verbose --quiet  # halt on error, less verbose
+    # only used with texify (latexmk calls these automatically)
+    dvips = -q
+    ps2pdf =
+
+
+Finally, the ``paginate`` section controls ``latexpages-paginate`` (see above).
+
+.. code:: ini
+
+    [paginate]
+    update = \\setcounter\{page\}\{(\d+)\}  # search/update regex
+    contents =                              # part with table of contents
+    replace = \\startpage\{(\d+)\}          # toc line search/update regex
 
 
 See also
@@ -194,6 +307,8 @@ License
 .. _MikTeX: http://miktex.org
 .. _latexmk: http://users.phys.psu.edu/~collins/software/latexmk-jcc/
 .. _texify: http://docs.miktex.org/manual/texifying.html
+.. _pdftk: http://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/
+.. _regular expression: http://docs.python.org/2/library/re.html
 
 .. _example directory: https://github.com/xflr6/latexpages/tree/master/example
 

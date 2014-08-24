@@ -1,6 +1,7 @@
 # pdfpages.py - concatenate pdf files with the latex pdfpages package
 
 import os
+import io
 import glob
 import string
 
@@ -16,11 +17,13 @@ class Template(object):
 
     _filename = tools.current_path('template.tex')
 
+    _encoding = 'utf-8'
+
     def __init__(self, filename=None):
         if filename is None:
             filename = self._filename
 
-        with open(filename) as fd:
+        with io.open(filename, encoding=self._encoding) as fd:
             data = fd.read()
 
         self._template = string.Template(data)
@@ -104,13 +107,14 @@ class Source(Document, Template):
         context['__DOCUMENT__'] = self.document(two_up)
         return self.substitute(context)
 
-    def render(self, filename, two_up=False, view=False, engine=None, cleanup=False):
+    def render(self, filename, two_up=False, view=False, engine=None,
+               options=None, cleanup=False):
         source = self.source(two_up)
 
-        with open(filename, 'wb') as fd:
-            fd.write(source.encode('utf-8'))
+        with io.open(filename, 'w', encoding=self._encoding) as fd:
+            fd.write(source)
 
-        render.compile(filename, view=view, engine=engine)
+        render.compile(filename, view=view, engine=engine, options=options)
 
         if cleanup:
             self.cleanup(filename)

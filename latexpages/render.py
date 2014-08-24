@@ -10,26 +10,36 @@ from . import tools
 
 __all__ = ['compile']
 
+OPTS = {
+    'latexmk': ['-silent'],
+    'texify': ['--batch', '--verbose', '--quiet'],
+    'dvvips': ['-q'],
+    'ps2pdf': [],
+}
 
-def compile(filename, dvips=False, view=False, engine=None):
+
+def compile(filename, dvips=False, view=False, engine=None, options=None):
     """Compile LaTeX file to PDF using either latexmk.pl or texify.exe."""
     compile_funcs = {
         'latexmk': latexmk_compile,
         'texify': texify_compile,
         None: default_compile,
     }
-    compile_funcs[engine](filename, dvips, view)
+    compile_funcs[engine](filename, dvips, view, options)
 
 
-def no_compile(filename, view=False):
+def no_compile(filename, dvips=False, view=False, options=None):
     raise NotImplementedError('platform not supported')
 
 
-def latexmk_compile(filename, dvips=False, view=False):
+def latexmk_compile(filename, dvips=False, view=False, options=None):
     """Compile LaTeX file with the latexmk perl script."""
     compile_dir, filename = os.path.split(filename)
 
-    latexmk = ['latexmk', '-silent']
+    if options is None:
+        options = OPTS
+
+    latexmk = ['latexmk'] + options['latexmk']
     if dvips:
         latexmk += ['-dvi', '-ps', '-pdfps']
     else:
@@ -42,11 +52,14 @@ def latexmk_compile(filename, dvips=False, view=False):
         subprocess.Popen(latexmk).wait()
 
 
-def texify_compile(filename, dvips=False, view=False):
+def texify_compile(filename, dvips=False, view=False, options=None):
     """Compile LaTeX file using MikTeX's texify utility."""
     compile_dir, filename = os.path.split(filename)
 
-    texify = ['texify', '--batch', '--verbose', '--quiet']
+    if options is None:
+        options = OPTS
+
+    texify = ['texify'] + options['texify']
     if not dvips:
         texify.append('--pdf')
     if view:
@@ -57,11 +70,12 @@ def texify_compile(filename, dvips=False, view=False):
         subprocess.Popen(texify).wait()
 
         if dvips:
-            dvips = ['dvips', '-P', 'pdf', '-q']
+            dvips = ['dvips', '-P', 'pdf'] + options['dvips']
             dvips.append(tools.swapext(filename, 'dvi'))
             subprocess.Popen(dvips).wait()
 
-            ps2pdf = ['ps2pdf', tools.swapext(filename, 'ps')]
+            ps2pdf = ['ps2pdf'] + options['ps2pdf']
+            ps2pdf.append(tools.swapext(filename, 'ps'))
             subprocess.Popen(ps2pdf).wait()
 
 

@@ -8,10 +8,13 @@
 
 \pagestyle{plain}
 
+\newcommand{\startpage}[1]{#1}
+
 
 \begin{document}
 
 \pagenumbering{roman}
+\setcounter{page}{1}
 
 \maketitle
 \thispagestyle{empty}
@@ -28,22 +31,22 @@
 		\hfill v
 	\item The value of not being seen\\
 		\textit{E.R. Bradshaw}
-		\hfill 1
+		\hfill \startpage{1}
 	\item How to stand up\\
 		\textit{B.J. Smegma}
-		\hfill 5
+		\hfill \startpage{5}
 	\item How to choose cover\\
 		\textit{Mr Nesbitt}
-		\hfill 9
+		\hfill \startpage{9}
 	\item Choosing the middle bush\\
 		\textit{E.V. Lambert}
-		\hfill 13
+		\hfill \startpage{13}
 	\item Choosing the water barrel\\
 		\textit{Ken Andrews}
-		\hfill 17
+		\hfill \startpage{17}
 	\item Going away on two weeks holiday\\
 		\textit{Mr. and Mrs. Watson}
-		\hfill 21
+		\hfill \startpage{21}
 \end{list}
 
 \cleardoublepage

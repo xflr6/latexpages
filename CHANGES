@@ -2,6 +2,20 @@ Latexpages Changelog
 ====================
 
 
+Version 0.2
+-----------
+
+Added automatic page number computation with table of contents update.
+
+Added INI settings for custom compile commands options.
+
+Added setting for custom 2-up template.
+
+Support utf-8 encoded templates.
+
+Fixed custom template loading.
+
+
 Version 0.1
 -----------
 
