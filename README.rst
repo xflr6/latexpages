@@ -9,8 +9,12 @@ proceedings, etc.) into a single combined PDF file using the pdfpages_ package.
 Create an **INI file** giving the name and parts of your collection and build
 it with the ``latxepages`` command-line utility.
 
-``latxepages`` will start one parallel typesetting process per core for
+``latexpages`` will start one parallel typesetting process per core for
 speedup.
+
+As each part is typeset independently, this allows to combine documents that
+cannot be merged into a single master-document (use of incompatible
+packages/options, latex-dvips-ps2pdf vs. pdflatex, etc.).
 
 
 Installation
@@ -25,7 +29,7 @@ This package runs under Python 2.7 and 3.3+, use pip_ to install:
 The compilation requires a LaTeX distribution (e.g. `TeX Live`_ or MikTeX_) and
 either latexmk_ or MikTeX's texify_ utility being available on your system.
 
-The automatic page numbering requires the _pdftk command-line utility.
+The automatic page numbering requires the pdftk_ command-line utility.
 
 
 Usage
@@ -63,7 +67,8 @@ options:
       article2
 
 The following will typeset all parts, copy their PDFs to the output directory,
-and combine them. By default, this also create a 2-up version:
+and combine them into a single PDF. By default, this also creates a 2-up
+version:
 
 .. code:: bash
 
@@ -108,7 +113,8 @@ according to the page count of the preceding documents' compiled PDFs.
 
     $ latexpages-paginate collection.ini
 
-Make sure the ``pdftk`` executable is available on your systems' path.
+Make sure the ``pdftk`` executable from pdftk_ is available on your systems'
+path.
 
 To use a different pattern for finding the ``\setcounter`` lines, set the
 ``update`` option in the ``paginate`` section of your INI file to a suitable
@@ -292,6 +298,9 @@ See also
 --------
 
 - http://www.ctan.org/topic/compilation
+- http://www.ctan.org/topic/confproc
+- http://www.ctan.org/pkg/pdfpages
+- http://www.ctan.org/pkg/confproc
 
 
 License

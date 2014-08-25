@@ -1,10 +1,10 @@
 \ProvidesClass{psf}
 
 \LoadClass[
-	twoside,%
-	headings=small,%
-	fontsize=11pt,%
-	numbers=endperiod,%#
+  twoside,%
+  headings=small,%
+  fontsize=11pt,%
+  numbers=endperiod,%#
 ]{scrartcl}
 
 % font encoding
@@ -16,10 +16,10 @@
 
 % page margins
 \usepackage[%
-	bindingoffset=5mm,%
-	centering,%
-	heightrounded,%
-	headsep=10pt,%
+  bindingoffset=5mm,%
+  centering,%
+  heightrounded,%
+  headsep=10pt,%
 ]{geometry}
 
 % page head, page foot
@@ -31,5 +31,8 @@
 
 % font styles
 \setkomafont{title}{\rmfamily\bfseries}
+
+% mockup content
+\usepackage{blindtext}
 
 \endinput
