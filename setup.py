@@ -2,6 +2,9 @@
 
 from setuptools import setup, find_packages
 
+with open('README.rst') as readme:
+    long_description = readme.read()
+
 setup(
     name='latexpages',
     version='0.2',
@@ -22,7 +25,7 @@ setup(
         'test': ['nose', 'coverage', 'flake8', 'pep8-naming'],
     },
     platforms='any',
-    long_description=open('README.rst').read(),
+    long_description=long_description,
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Environment :: Console',
