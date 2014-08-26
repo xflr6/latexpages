@@ -2,6 +2,14 @@ Latexpages Changelog
 ====================
 
 
+Version 0.2.2
+-------------
+
+More informative exception on failed texify/latexmk/pdftk execution.
+
+Improved example to leave out the empty page at the end.
+
+
 Version 0.2.1
 -------------
 

@@ -1,6 +1,7 @@
 # numbering.py - update start pages, update table of contents (8-bit safe)
 
 import re
+import errno
 import subprocess
 
 from . import jobs, tools
@@ -62,7 +63,15 @@ def replace(filename, pattern, repl, verbose=True):
 def npages(filename, pattern=re.compile(NPAGES, re.MULTILINE)):
     """Return the number of pages of a PDF by asking pdftk."""
     pdftk = ['pdftk', filename, 'dump_data']
-    metadata = subprocess.check_output(pdftk, universal_newlines=True)
+    try:
+        metadata = subprocess.check_output(pdftk, universal_newlines=True)
+    except OSError as e:
+        if e.errno == errno.ENOENT:
+            raise RuntimeError('failed to execute %r, '
+                'make sure the pdftk executable '
+                'is on your systems\' path' % pdftk)
+        else:
+            raise
 
     match = pattern.search(metadata)
     if match:

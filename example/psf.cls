@@ -28,6 +28,7 @@
 
 % twoside
 \AtEndDocument{\cleardoublepage}
+\newcommand{\theend}{\makeatletter\global\let\@enddocumenthook\@empty\makeatother}
 
 % font styles
 \setkomafont{title}{\rmfamily\bfseries}

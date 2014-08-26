@@ -7,7 +7,7 @@ This tool automates compiling LaTeX document collections (for working papers,
 proceedings, etc.) into a single combined PDF file using the pdfpages_ package.
 
 Create an **INI file** giving the name and parts of your collection and build
-it with the ``latxepages`` command-line utility.
+it with the ``latexpages`` command-line utility.
 
 ``latexpages`` will start one parallel typesetting process per core for
 speedup.

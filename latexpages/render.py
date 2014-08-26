@@ -2,6 +2,7 @@
 
 import sys
 import os
+import errno
 import subprocess
 
 from ._compat import apply
@@ -25,6 +26,8 @@ def compile(filename, dvips=False, view=False, engine=None, options=None):
         'texify': texify_compile,
         None: default_compile,
     }
+    if engine not in compile_funcs:
+        raise ValueError('unknown engine: %r' % (engine,))
     compile_funcs[engine](filename, dvips, view, options)
 
 
@@ -49,7 +52,15 @@ def latexmk_compile(filename, dvips=False, view=False, options=None):
     latexmk.append(filename)
 
     with tools.chdir(compile_dir):
-        subprocess.Popen(latexmk).wait()
+        try:
+            subprocess.Popen(latexmk).wait()
+        except OSError as e:
+            if e.errno == errno.ENOENT:
+                raise RuntimeError('failed to execute %r, '
+                    'make sure the latexmk executable '
+                    'is on your systems\' path' % latexmk)
+            else:
+                raise
 
 
 def texify_compile(filename, dvips=False, view=False, options=None):
@@ -67,7 +78,15 @@ def texify_compile(filename, dvips=False, view=False, options=None):
     texify.append(filename)
 
     with tools.chdir(compile_dir):
-        subprocess.Popen(texify).wait()
+        try:
+            subprocess.Popen(texify).wait()
+        except OSError as e:
+            if e.errno == errno.ENOENT:
+                raise RuntimeError('failed to execute %r, '
+                    'make sure the MikTeX executables '
+                    'are on your systems\' path' % texify)
+            else:
+                raise
 
         if dvips:
             dvips = ['dvips', '-P', 'pdf'] + options['dvips']
