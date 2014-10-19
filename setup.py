@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='latexpages',
-    version='0.2.2',
+    version='0.3',
     author='Sebastian Bank',
     author_email='sebastian.bank@uni-leipzig.de',
     description='Combine LaTeX docs into a single PDF',
@@ -14,17 +14,18 @@ setup(
     packages=find_packages(),
     package_data={'latexpages': ['template.tex', 'settings.ini']},
     entry_points={'console_scripts': [
-        'latexpages=latexpages:main',
-        'latexpages-paginate=latexpages:main_paginate'
+        'latexpages=latexpages.__main__:main',
+        'latexpages-paginate=latexpages.__main__:main_paginate',
+        'latexpages-clean=latexpages.__main__:main_clean'
     ]},
     extras_require={
-        'dev': ['wheel'],
         'test': ['nose', 'coverage', 'flake8', 'pep8-naming'],
+        'dev': ['wheel'],
     },
     platforms='any',
     long_description=open('README.rst').read(),
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 4 - Beta',
         'Environment :: Console',
         'Intended Audience :: End Users/Desktop',
         'Intended Audience :: Science/Research',

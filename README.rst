@@ -1,7 +1,7 @@
 Latexpages
 ==========
 
-|PyPI version| |License| |Wheel| |Downloads|
+|PyPI version| |License| |Supported Python| |Format| |Downloads|
 
 This tool automates compiling LaTeX document collections (for working papers,
 proceedings, etc.) into a single combined PDF file using the pdfpages_ package.
@@ -26,10 +26,11 @@ This package runs under Python 2.7 and 3.3+, use pip_ to install:
 
     $ pip install latexpages
 
-The compilation requires a LaTeX distribution (e.g. `TeX Live`_ or MikTeX_) and
+The compilation requires a TeX distribution (e.g. `TeX Live`_ or MikTeX_) and
 either latexmk_ or MikTeX's texify_ utility being available on your system.
 
-The automatic page numbering requires the pdftk_ command-line utility.
+The optional automatic page numbering (see below) requires the pdftk_
+command-line utility.
 
 
 Usage
@@ -336,9 +337,12 @@ License
 .. |License| image:: https://pypip.in/license/latexpages/badge.svg
     :target: https://pypi.python.org/pypi/latexpages
     :alt: License
-.. |Wheel| image:: https://pypip.in/wheel/latexpages/badge.svg
+.. |Supported Python| image:: https://pypip.in/py_versions/latexpages/badge.svg
     :target: https://pypi.python.org/pypi/latexpages
-    :alt: Wheel Status
+    :alt: Supported Python Versions
+.. |Format| image:: https://pypip.in/format/latexpages/badge.svg
+    :target: https://pypi.python.org/pypi/latexpages
+    :alt: Format
 .. |Downloads| image:: https://pypip.in/d/latexpages/badge.svg
     :target: https://pypi.python.org/pypi/latexpages
     :alt: Downloads

@@ -2,6 +2,16 @@ Latexpages Changelog
 ====================
 
 
+Version 0.3
+-----------
+
+Added cleaning command for deleting intermediate and output files.
+
+Allow to set default number of processes and engine in config file.
+
+Added support for python -m latexpages invocation.
+
+
 Version 0.2.2
 -------------
 

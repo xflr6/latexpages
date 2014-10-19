@@ -1,18 +1,18 @@
-# build.py - compile parts, copy to output, combine, combine two_up
+# building.py - compile parts, copy to output, combine, combine two_up
 
 import os
 import shutil
 import multiprocessing
 
-from . import jobs, render, pdfpages, tools
+from . import jobs, rendering, pdfpages, tools
 
 __all__ = ['make']
 
 
-def make(config, procecesses=None, engine=None, cleanup=True):
+def make(config, processes=None, engine=None, cleanup=True):
     """Compile parts, copy, and combine as instructed in config file."""
-    job = jobs.Job(config, engine, cleanup)
-    pool = multiprocessing.Pool(procecesses)
+    job = jobs.Job(config, processes, engine, cleanup)
+    pool = multiprocessing.Pool(job.processes)
 
     pool.map(compile_part, job.to_compile(), chunksize=1)
 
@@ -28,7 +28,7 @@ def compile_part(args):
     """Compile part LaTeX document to PDF."""
     job, part, filename, dvips = args
     with tools.chdir(job.config_dir, part):
-        render.compile(filename,
+        rendering.compile(filename,
             dvips=dvips, engine=job.engine, options=job.compile_opts)
 
 

@@ -11,36 +11,55 @@ from . import tools
 __all__ = ['Job']
 
 
+def get_string(config, section, option, optional=False, default=None):
+    if config.has_option(section, option):
+        value = config.get(section, option).strip()
+    else:
+        value = ''
+    if not value:
+        value = default
+    if not optional and not value:
+        raise ValueError('empty %s option in %s section' % (option, section))
+    return value
+
+
+def get_int(config, section, option, optional=False):
+    if config.has_option(section, option):
+        value = config.get(section, option).strip()
+    else:
+        value = ''
+    if value != 0 and not value:
+        if not optional:
+            raise ValueError('empty %s option in %s section' % (option, section))
+        value = None
+    else:
+        value = int(value)
+    return value
+        
+
+def get_list(config, section, option, optional=False):
+    if config.has_option(section, option):
+        value = config.get(section, option).strip().split()
+    else:
+        value = []
+    if not optional and not value:
+        raise ValueError('empty %s option in %s section' % (option, section))
+    return value
+
+
 class Job(object):
     """INI-file giving the document collection parts and how to combine them."""
 
     _defaults = tools.current_path('settings.ini')
 
-    _sections = ('make', 'parts', 'template', 'substitute', 'compile', 'paginate')
+    _sections = ('make', 'parts', 'template', 'substitute', 'compile',
+        'paginate', 'clean')
 
-    @staticmethod
-    def _get_string(config, section, option, optional=False, default=None):
-        if config.has_option(section, option):
-            value = config.get(section, option).strip()
-        else:
-            value = ''
-        if not value:
-            value = default
-        if not optional and not value:
-            raise ValueError('empty %s option in %s section'
-                % (option, section))
-        return value
+    _get_string = staticmethod(get_string)
 
-    @staticmethod
-    def _get_list(config, section, option, optional=False):
-        if config.has_option(section, option):
-            value = config.get(section, option).strip().split()
-        else:
-            value = []
-        if not optional and not value:
-            raise ValueError('empty %s option in %s section'
-                % (option, section))
-        return value
+    _get_int = staticmethod(get_int)
+
+    _get_list = staticmethod(get_list)
 
     def _get_path(self, filename, default=None):
         if filename:
@@ -49,7 +68,7 @@ class Job(object):
         else:
             return default
 
-    def __init__(self, filename, engine=None, cleanup=True):
+    def __init__(self, filename, processes=None, engine=None, cleanup=True):
         cfg = ConfigParser()
         if not os.path.exists(filename):
             raise ValueError('file not found: %r' % filename)
@@ -67,6 +86,12 @@ class Job(object):
             }
             getattr(self, '_parse_%s' % section)(**getters)
 
+        if processes is None:
+            processes = self._get_int(cfg, 'compile', 'processes', optional=True)
+        if engine is None:
+            engine = self._get_string(cfg, 'compile', 'engine', optional=True)
+        
+        self.processes = processes
         self.engine = engine
         self.cleanup = cleanup
 
@@ -144,7 +169,13 @@ class Job(object):
 
         self.paginate_replace = string('replace')
 
-    def _iter_parts(self, groups):
+    def _parse_clean(self, lst, boolean, **kwargs):
+        self.clean_parts = lst('parts', optional=True)
+        self.clean_output = boolean('output')
+
+    def _iter_parts(self, groups=None):
+        if groups is None:
+            groups = self._groups
         for parts, tmpl in groups:
             for i, part in enumerate(parts):
                 context = {
@@ -157,7 +188,7 @@ class Job(object):
                 yield part, name
 
     def to_compile(self):
-        for part, _ in self._iter_parts(self._groups):
+        for part, _ in self._iter_parts():
             filename = '%s.tex' % part
             dvips = part in self._dvips
             yield self, part, filename, dvips
@@ -171,7 +202,7 @@ class Job(object):
             yield source, pdf
 
     def to_copy(self):
-        for part, name in self._iter_parts(self._groups):
+        for part, name in self._iter_parts():
             source = os.path.join(part, '%s.pdf' % part)
             target = os.path.join(self.directory, tools.swapext(name, 'pdf'))
             yield source, target
@@ -189,3 +220,7 @@ class Job(object):
             prelims = []
             filenames = [name for _, name in self._iter_parts(self._groups[:-1])]
             yield self, outname, self.template_two_up, prelims, filenames, True
+
+    def to_clean(self):
+        for part, _ in self._iter_parts():
+            yield part

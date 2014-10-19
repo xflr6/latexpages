@@ -1,4 +1,4 @@
-# render.py - compile latex to PDF, optionally open in viewer
+# rendering.py - compile latex to PDF, optionally open in viewer
 
 import sys
 import os
