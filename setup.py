@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='latexpages',
-    version='0.3.1',
+    version='0.3.2',
     author='Sebastian Bank',
     author_email='sebastian.bank@uni-leipzig.de',
     description='Combine LaTeX docs into a single PDF',
@@ -13,6 +13,7 @@ setup(
     url='http://github.com/xflr6/latexpages',
     packages=find_packages(),
     package_data={'latexpages': ['template.tex', 'settings.ini']},
+    zip_safe=False,
     entry_points={'console_scripts': [
         'latexpages=latexpages.__main__:main',
         'latexpages-paginate=latexpages.__main__:main_paginate',
