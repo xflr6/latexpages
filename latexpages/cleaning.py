@@ -27,6 +27,7 @@ def clean(config, clean_output=None):
             if tools.confirm('...delete %d files matched in parts?' % len(in_parts)):
                 remove(in_parts)
 
+
 def matched_files(dirs, patterns):
     for d in dirs:
         if os.path.isabs(d):

@@ -5,6 +5,7 @@ build/
 dist/
 *.egg-info/
 *.egg
+.eggs
 
 .coverage
 cover/
@@ -13,3 +14,5 @@ htmlcov/
 .tox/
 
 Thumbs.db
+
+example/_output/

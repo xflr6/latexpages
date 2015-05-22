@@ -35,7 +35,7 @@ def get_int(config, section, option, optional=False):
     else:
         value = int(value)
     return value
-        
+
 
 def get_list(config, section, option, optional=False):
     if config.has_option(section, option):
@@ -90,7 +90,7 @@ class Job(object):
             processes = self._get_int(cfg, 'compile', 'processes', optional=True)
         if engine is None:
             engine = self._get_string(cfg, 'compile', 'engine', optional=True)
-        
+
         self.processes = processes
         self.engine = engine
         self.cleanup = cleanup

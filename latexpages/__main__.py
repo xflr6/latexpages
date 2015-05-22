@@ -71,7 +71,7 @@ if __name__ == '__main__':
     if sys.platform == 'win32' and sys.version_info[:2] < (3, 2):
         # http://bugs.python.org/issue17101
         # http://bugs.python.org/issue10845
-        raise NotImplementedError('__main__.py invocation is  not compatible with '
+        raise NotImplementedError('__main__.py invocation is not compatible with '
             'multiprocessing in Python %d.%d under Windows. '
             'Use the latexpages command instead.'
             % sys.version_info[:2])
