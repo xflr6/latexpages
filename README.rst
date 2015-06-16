@@ -340,18 +340,18 @@ License
 .. |--| unicode:: U+2013
 
 
-.. |PyPI version| image:: https://pypip.in/v/latexpages/badge.svg
+.. |PyPI version| image:: https://img.shields.io/pypi/v/latexpages.svg
     :target: https://pypi.python.org/pypi/latexpages
     :alt: Latest PyPI Version
-.. |License| image:: https://pypip.in/license/latexpages/badge.svg
+.. |License| image:: https://img.shields.io/pypi/l/latexpages.svg
     :target: https://pypi.python.org/pypi/latexpages
     :alt: License
-.. |Supported Python| image:: https://pypip.in/py_versions/latexpages/badge.svg
+.. |Supported Python| image:: https://img.shields.io/pypi/pyversions/latexpages.svg
     :target: https://pypi.python.org/pypi/latexpages
     :alt: Supported Python Versions
-.. |Format| image:: https://pypip.in/format/latexpages/badge.svg
+.. |Format| image:: https://img.shields.io/pypi/format/latexpages.svg
     :target: https://pypi.python.org/pypi/latexpages
     :alt: Format
-.. |Downloads| image:: https://pypip.in/d/latexpages/badge.svg
+.. |Downloads| image:: https://img.shields.io/pypi/dm/latexpages.svg
     :target: https://pypi.python.org/pypi/latexpages
     :alt: Downloads
