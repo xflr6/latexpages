@@ -2,6 +2,7 @@
 
 """Command-line interface."""
 
+import os
 import sys
 import argparse
 
@@ -16,7 +17,7 @@ def main():
         description='Compiles and combines LaTeX docs into a single PDF file')
 
     parser.add_argument('--version', action='version',
-        version='%%(prog)s %s' % __version__)
+        version='%%(prog)s %s' % _version())
 
     parser.add_argument('-c', dest='engine', choices=['latexmk', 'texify'], default=None,
         help='use latexmk.pl or texify (default: guess from platform)')
@@ -40,7 +41,7 @@ def main_paginate():
         description='Computes and updates start page numbers in compiled parts and contents')
 
     parser.add_argument('--version', action='version',
-        version='%%(prog)s %s' % __version__)
+        version='%%(prog)s %s' % _version())
 
     parser.add_argument('filename',
         help='INI file configuring the parts and paginate options')
@@ -55,7 +56,7 @@ def main_clean():
         description='')
 
     parser.add_argument('--version', action='version',
-        version='%%(prog)s %s' % __version__)
+        version='%%(prog)s %s' % _version())
 
     parser.add_argument('filename',
         help='INI file configuring the parts and clean options')
@@ -65,6 +66,11 @@ def main_clean():
 
     args = parser.parse_args()
     clean(args.filename, {'yes': True, 'no': False, None: None}[args.clean_output])
+
+
+def _version():
+    pkg_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    return '%s from %s (python %s)' % (__version__, pkg_dir, sys.version[:3])
 
 
 if __name__ == '__main__':
