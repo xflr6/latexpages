@@ -22,8 +22,8 @@ Links
 
 - GitHub: http://github.com/xflr6/latexpages
 - PyPI: http://pypi.python.org/pypi/latexpages
-- Download: http://pypi.python.org/pypi/latexpages#downloads
 - Issue Tracker: http://github.com/xflr6/latexpages/issues
+- Download: http://pypi.python.org/pypi/latexpages#downloads
 
 
 Installation

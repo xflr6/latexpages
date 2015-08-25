@@ -19,8 +19,9 @@ def clean(config, clean_output=None):
                 return
             print('\n'.join(in_parts))
             print('\n'.join(in_output))
-            if tools.confirm('...delete %d files matched in parts and %d files '
-                'removing %s?' % (len(in_parts), len(in_output), job.directory)):
+            msg = ('...delete %d files matched in parts and %d files '
+                'removing %s?' % (len(in_parts), len(in_output), job.directory))
+            if tools.confirm(msg):
                 remove(in_parts, job.directory)
         elif in_parts:
             print('\n'.join(in_parts))
