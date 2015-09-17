@@ -322,17 +322,16 @@ License
 .. _pdfpages: http://www.ctan.org/pkg/pdfpages
 .. _pip: http://pip.readthedocs.org
 
-.. _TeX Live: https://www.tug.org/texlive/
+.. _TeX Live: http://www.tug.org/texlive/
 .. _MikTeX: http://miktex.org
 .. _latexmk: http://users.phys.psu.edu/~collins/software/latexmk-jcc/
 .. _texify: http://docs.miktex.org/manual/texifying.html
 .. _pdftk: http://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/
 .. _regular expression: http://docs.python.org/2/library/re.html
 
-.. _example directory: https://github.com/xflr6/latexpages/tree/master/example
+.. _example directory: http://github.com/xflr6/latexpages/tree/master/example
 
 .. _templates: http://docs.python.org/2/library/stdtypes.html#string-formatting
-
 
 .. _MIT license: http://opensource.org/licenses/MIT
 
