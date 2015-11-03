@@ -45,7 +45,7 @@ def main():
             'Use the latexpages command from the Python "Scripts" directory instead. '
             'To disable multiprocessing, pass "1" as command-line argument for the number of processes.'
             % sys.version_info[:2])
-    
+
     make(args.filename, args.processes, args.engine, args.cleanup, args.only)
 
 

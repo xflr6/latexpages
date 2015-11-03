@@ -93,7 +93,7 @@ class NullPool(object):
 
     def map(self, func, iterable, chunksize=None):
         if chunksize not in (1, None):
-            raise alueError('%s.map() with chunksize=%r' % (self, chunksize))
+            raise ValueError('%s.map() with chunksize=%r' % (self, chunksize))
         return map(func, iterable)
 
     def terminate(self):
