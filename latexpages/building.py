@@ -9,19 +9,28 @@ from . import jobs, rendering, pdfpages, tools
 __all__ = ['make']
 
 
-def make(config, processes=None, engine=None, cleanup=True):
+def make(config, processes=None, engine=None, cleanup=True, only=None):
     """Compile parts, copy, and combine as instructed in config file."""
     job = jobs.Job(config, processes, engine, cleanup)
-    pool = multiprocessing.Pool(job.processes)
 
-    pool.map(compile_part, job.to_compile(), chunksize=1)
+    if only is not None:
+        args = job.to_compile_only(only)
+        compile_part(args)
+        return
 
-    copy_parts(job)
+    Pool = multiprocessing.Pool if job.processes != 1 else tools.NullPool
+    pool = Pool(job.processes, tools.ignore_sigint)
 
-    pool.map(combine_parts, job.to_combine(), chunksize=1)
-
-    pool.close()
-    pool.join()
+    try:
+        pool.map(compile_part, job.to_compile(), chunksize=1)
+        copy_parts(job)
+        pool.map(combine_parts, job.to_combine(), chunksize=1)
+    except KeyboardInterrupt:  # http://bugs.python.org/issue8296
+        pool.terminate()
+    else:
+        pool.close()
+    finally:
+        pool.join()
 
 
 def compile_part(args):

@@ -5,7 +5,14 @@ Latexpages Changelog
 Version 0.3.3 (in development)
 ------------------------------
 
-TODO: add single article compiling
+Added --only <part> command-line option for single article compiling.
+
+Bypass multiprocessing.Pool when single-process rendering is requested.
+
+Workaround multiprocessing issues with KeyBoardInterrupt.
+
+Improved __main__.py invocation support on Windows. Document workaround for
+launcher installation issues.
 
 
 Version 0.3.2

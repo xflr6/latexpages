@@ -35,6 +35,14 @@ This package runs under Python 2.7 and 3.3+, use pip_ to install:
 
     $ pip install latexpages
 
+On Windows, run the following afterwards (works around a ``pip``-bug in the
+installation of the ``latexpages`` command resulting in
+``AssertionError: __main__`` during multi-process compilation):
+
+.. code:: bash
+
+    $ wheel install-scripts latexpages
+
 The compilation requires a TeX distribution (e.g. `TeX Live`_ or MikTeX_) and
 either latexmk_ or MikTeX's texify_ utility being available on your system.
 

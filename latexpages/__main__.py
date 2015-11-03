@@ -25,6 +25,9 @@ def main():
     parser.add_argument('--keep', dest='cleanup', action='store_false',
         help='keep combination document(s) and their auxiliary files')
 
+    parser.add_argument('--only', dest='only', metavar='<part>', default=None,
+        help='compile the given part without combining')
+
     parser.add_argument('filename',
         help='INI file configuring the parts and output options')
 
@@ -32,7 +35,18 @@ def main():
         help='number of parallel processes (default: one per core)')
 
     args = parser.parse_args()
-    make(args.filename, args.processes, args.engine, args.cleanup)
+
+    if (__name__ == '__main__' and sys.platform == 'win32' and
+        sys.version_info[:2] < (3, 2) and args.processes != 1):
+        # http://bugs.python.org/issue17101
+        # http://bugs.python.org/issue10845
+        raise NotImplementedError('__main__.py invocation is not compatible with '
+            'multiprocessing in Python %d.%d under Windows. '
+            'Use the latexpages command from the Python "Scripts" directory instead. '
+            'To disable multiprocessing, pass "1" as command-line argument for the number of processes.'
+            % sys.version_info[:2])
+    
+    make(args.filename, args.processes, args.engine, args.cleanup, args.only)
 
 
 def main_paginate():
@@ -74,11 +88,4 @@ def _version():
 
 
 if __name__ == '__main__':
-    if sys.platform == 'win32' and sys.version_info[:2] < (3, 2):
-        # http://bugs.python.org/issue17101
-        # http://bugs.python.org/issue10845
-        raise NotImplementedError('__main__.py invocation is not compatible with '
-            'multiprocessing in Python %d.%d under Windows. '
-            'Use the latexpages command instead.'
-            % sys.version_info[:2])
     main()

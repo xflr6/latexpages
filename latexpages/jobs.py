@@ -193,6 +193,13 @@ class Job(object):
             dvips = part in self._dvips
             yield self, part, filename, dvips
 
+    def to_compile_only(self, onlypart):
+        to_compile = {args[1]: args for args in self.to_compile()}
+        try:
+            return to_compile[onlypart]
+        except KeyError:
+            raise KeyError('Unknown part %r' % onlypart)
+
     def to_update(self):
         mainmatter = self._groups[1][0]
         parts = mainmatter[1:] if self._first_to_front else mainmatter
