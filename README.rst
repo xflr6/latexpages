@@ -105,6 +105,7 @@ Check the usage of the ``latexpages`` command:
 
     $ latexpages --help
     usage: latexpages [-h] [--version] [-c {latexmk,texify}] [--keep]
+                      [--only <part>]
                       filename [processes]
     
     Compiles and combines LaTeX docs into a single PDF file
@@ -118,6 +119,7 @@ Check the usage of the ``latexpages`` command:
       --version            show program's version number and exit
       -c {latexmk,texify}  use latexmk.pl or texify (default: guess from platform)
       --keep               keep combination document(s) and their auxiliary files
+      --only <part>        compile the given part without combining
 
 
 Pagination
