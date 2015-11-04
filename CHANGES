@@ -2,8 +2,8 @@ Latexpages Changelog
 ====================
 
 
-Version 0.3.3 (in development)
-------------------------------
+Version 0.4
+-----------
 
 Added --only <part> command-line option for single article compiling.
 
