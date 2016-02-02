@@ -19,10 +19,6 @@ setup(
         'latexpages-paginate=latexpages.__main__:main_paginate',
         'latexpages-clean=latexpages.__main__:main_clean'
     ]},
-    extras_require={
-        'test': ['nose', 'coverage', 'flake8', 'pep8-naming'],
-        'dev': ['wheel'],
-    },
     platforms='any',
     long_description=open('README.rst').read(),
     classifiers=[

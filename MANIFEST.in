@@ -1,3 +1,4 @@
 include README.rst LICENSE CHANGES
+include requirements.txt
 include clean-example.py make-example.py paginate-example.py
 recursive-include example *.cls *.ini *.tex
