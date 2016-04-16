@@ -4,4 +4,4 @@
 import latexpages
 
 if __name__ == '__main__':
-    latexpages.make('example/psf42.ini')
+    latexpages.make('example/latexpages.ini')
