@@ -11,6 +11,8 @@ Changed command line invocation: number of processes is now a keyword parameter
 Simplified invocation: The filename argument is now optional and defaults to
 latexpages.ini in the current directory (like make defaults to use Makefile).
 
+Make better use of custom LaTeX class in example.
+
 
 Version 0.4
 -----------

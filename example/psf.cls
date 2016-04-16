@@ -1,5 +1,12 @@
 \ProvidesClass{psf}
 
+\RequirePackage{kvoptions}
+\SetupKeyvalOptions{prefix=@}
+\DeclareBoolOption{last}
+\DeclareDefaultOption{\@unknownoptionerror}
+\ProcessKeyvalOptions*\relax
+
+\PassOptionsToPackage{paper=a5}{typearea}
 \LoadClass[
   twoside,%
   headings=small,%
@@ -8,14 +15,13 @@
 ]{scrartcl}
 
 % font encoding
-\usepackage[T1]{fontenc}
-\renewcommand{\encodingdefault}{T1}
+\RequirePackage[T1]{fontenc}
 
 % serif font
-\usepackage{lmodern}
+\RequirePackage{lmodern}
 
 % page margins
-\usepackage[%
+\RequirePackage[%
   bindingoffset=5mm,%
   centering,%
   heightrounded,%
@@ -23,17 +29,16 @@
 ]{geometry}
 
 % page head, page foot
-\usepackage{scrpage2}
+\RequirePackage{scrpage2}
 \pagestyle{scrheadings}
 
 % twoside
-\AtEndDocument{\cleardoublepage}
-\newcommand{\theend}{\makeatletter\global\let\@enddocumenthook\@empty\makeatother}
+\if@last\else\AtEndDocument{\cleardoublepage}\fi
 
 % font styles
 \setkomafont{title}{\rmfamily\bfseries}
 
 % mockup content
-\usepackage{blindtext}
+\RequirePackage{blindtext}
 
 \endinput
