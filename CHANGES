@@ -2,6 +2,16 @@ Latexpages Changelog
 ====================
 
 
+Version 0.5 (in development)
+----------------------------
+
+Changed command line invocation: number of processes is now a keyword parameter
+(--processes <n>) instead of an optional positional parameter.
+
+Simplified invocation: The filename argument is now optional and defaults to
+latexpages.ini in the current directory (like make defaults to use Makefile).
+
+
 Version 0.4.3
 -------------
 
