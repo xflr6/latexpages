@@ -41,7 +41,7 @@ def replace(filename, pattern, repl, verbose=True):
 
     def repl_func(match):
         start = match.start(1) - match.start(0)
-        end = match.end(1) - match.end(0)
+        end = match.end(1) - match.start(0)
         group = match.group(0)
         result = group[:start] + repl + group[end:]
         if verbose:
