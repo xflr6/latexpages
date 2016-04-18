@@ -91,7 +91,7 @@ def write_contents(filename, pattern, pages, verbose=True):
 
     def repl_func(match, pg=iter(pages)):
         start = match.start(1) - match.start(0)
-        end = match.end(1) - match.end(0)
+        end = match.end(1) - match.start(0)
         group = match.group(0)
         repl = ('%d' % next(pg)).encode('ascii')
         result = group[:start] + repl + group[end:]
