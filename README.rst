@@ -53,14 +53,14 @@ pdftk_ command-line utility.
 Usage
 -----
 
-Create a working directory holding your plain-text INI file. Put all your
-documents into subdirectories with the same name as the corresponding ``.tex``
-file:
+Create a working directory holding your plain-text INI file with the latexpages
+configuration. Put all your documents into subdirectories with the same name as
+the corresponding ``.tex`` file:
 
 ::
 
     collection/
-        collection.ini
+        latexpages.ini
         article1/
             article1.tex
             references.bib
@@ -90,7 +90,7 @@ version:
 
 .. code:: bash
 
-    $ latexpages collection.ini
+    $ latexpages latexpages.ini
 
 Check the `example directory`_ in the source distribution for a working
 complete example. 
@@ -105,14 +105,14 @@ Check the usage of the ``latexpages`` command:
 
     $ latexpages --help
     usage: latexpages [-h] [--version] [-c {latexmk,texify}] [--keep]
-                      [--only <part>]
-                      filename [processes]
+                      [--only <part>] [--processes <n>]
+                      [filename]
     
     Compiles and combines LaTeX docs into a single PDF file
     
     positional arguments:
       filename             INI file configuring the parts and output options
-      processes            number of parallel processes (default: one per core)
+                           (default: latexpages.ini in the current directory)
     
     optional arguments:
       -h, --help           show this help message and exit
@@ -120,6 +120,7 @@ Check the usage of the ``latexpages`` command:
       -c {latexmk,texify}  use latexmk.pl or texify (default: guess from platform)
       --keep               keep combination document(s) and their auxiliary files
       --only <part>        compile the given part without combining
+      --processes <n>      number of parallel processes (default: one per core)
 
 
 Pagination
@@ -131,7 +132,7 @@ according to the page count of the preceding documents' compiled PDFs.
 
 .. code:: bash
 
-    $ latexpages-paginate collection.ini
+    $ latexpages-paginate latexpages.ini
 
 Make sure the ``pdftk`` executable from pdftk_ is available on your systems'
 path.
@@ -154,7 +155,7 @@ Directory structure:
 ::
 
     collection/
-        collection.ini
+        latexpages.ini
         prelims/
             prelims.tex
         article1/
@@ -195,12 +196,13 @@ Check the usage of the ``latexpages-paginate`` command:
 .. code:: bash
 
     $ latexpages-paginate --help
-    usage: latexpages-paginate [-h] filename
+    usage: latexpages-paginate [-h] [--version] [filename]
     
     Computes and updates start page numbers in compiled parts and contents
     
     positional arguments:
       filename    INI file configuring the parts and paginate options
+                  (default: latexpages.ini in the current directory)
     
     optional arguments:
       -h, --help  show this help message and exit
