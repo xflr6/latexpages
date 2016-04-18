@@ -46,8 +46,8 @@ installation of the ``latexpages`` command resulting in
 The compilation requires a TeX distribution (e.g. `TeX Live`_ or MikTeX_) and
 either latexmk_ or MikTeX's texify_ utility being available on your system.
 
-The optional automatic page numbering (see below) requires the pdftk_
-command-line utility.
+The optional automatic page numbering (see below) requires the (cross-platform)
+pdftk_ command-line utility.
 
 
 Usage

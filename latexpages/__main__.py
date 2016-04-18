@@ -10,8 +10,6 @@ from . import __version__, make, paginate, clean
 
 __all__ = ['main', 'main_paginate', 'main_clean']
 
-INIFILE = 'latexpages.ini'
-
 
 def main():
     """Run the command-line interface."""
@@ -30,20 +28,13 @@ def main():
     parser.add_argument('--only', dest='only', metavar='<part>', default=None,
         help='compile the given part without combining')
 
-    parser.add_argument('--processes', dest='processes', metavar='<n>', type=int,  default=None,
+    parser.add_argument('filename',
+        help='INI file configuring the parts and output options')
+
+    parser.add_argument('processes', nargs='?', type=int, default=None,
         help='number of parallel processes (default: one per core)')
 
-    parser.add_argument('filename', nargs='?', default=None,
-        help='INI file configuring the parts and output options '
-             '(default: %s in the current directory)' % INIFILE)
-
     args = parser.parse_args()
-
-    if args.filename is None:
-        if os.path.exists(INIFILE):
-            args.filename = INIFILE
-        else:
-            parser.error('too few arguments')
 
     if (__name__ == '__main__' and sys.platform == 'win32' and
         sys.version_info[:2] < (3, 2) and args.processes != 1):
@@ -52,7 +43,7 @@ def main():
         raise NotImplementedError('__main__.py invocation is not compatible with '
             'multiprocessing in Python %d.%d under Windows. '
             'Use the latexpages command from the Python "Scripts" directory instead. '
-            'To disable multiprocessing, pass "--processes 1" as command-line argument.'
+            'To disable multiprocessing, pass "1" as command-line argument for the number of processes.'
             % sys.version_info[:2])
 
     make(args.filename, args.processes, args.engine, args.cleanup, args.only)
