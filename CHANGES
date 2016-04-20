@@ -2,8 +2,8 @@ Latexpages Changelog
 ====================
 
 
-Version 0.5 (in development)
-----------------------------
+Version 0.5
+-----------
 
 Changed command line invocation: number of processes is now a keyword parameter
 (--processes <n>) instead of an optional positional parameter.
