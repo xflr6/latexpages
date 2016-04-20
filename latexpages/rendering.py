@@ -103,6 +103,7 @@ def default_compile(platform=sys.platform):
     compile_funcs = {
         'darwin': latexmk_compile,
         'linux2': latexmk_compile,
+        'linux': latexmk_compile,
         'win32': texify_compile,
     }
     return compile_funcs.get(platform, no_compile)

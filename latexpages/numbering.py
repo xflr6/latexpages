@@ -1,5 +1,6 @@
 # numbering.py - update start pages, update table of contents (8-bit safe)
 
+import io
 import re
 import errno
 import string
@@ -12,8 +13,6 @@ from . import jobs, tools
 __all__ = ['paginate']
 
 NPAGES = re.compile(r'^NumberOfPages: (\d+)', re.MULTILINE)
-AUTHOR = re.compile(r'\\author\{([^}]*)\}'.encode('ascii'))
-TITLE = re.compile(r'\\title\{([^}]*)\}'.encode('ascii'))
 
 
 def paginate(config):
@@ -23,7 +22,9 @@ def paginate(config):
         parts = list(job.to_update())
         updated, pages = startpages(job.paginate_update, parts)
         if job.paginate_template:
-            contexts = list(template_contexts(parts, pages))
+            contexts = list(template_contexts(parts, pages,
+                                              job.paginate_author_extract,
+                                              job.paginate_title_extract))
             changed = write_contents_template(job.paginate_target, job.paginate_replace,
                                               job.paginate_template, contexts)
         else:
@@ -122,12 +123,15 @@ def write_contents(filename, pattern, pages, verbose=True):
         return False
 
 
-def template_contexts(parts, pages, pat_author=AUTHOR, pat_title=TITLE):
+def template_contexts(parts, pages, author_extract, title_extract, encoding='utf-8'):
     assert len(parts) == len(pages)
+    assert author_extract and title_extract
+    pat_author = re.compile(author_extract)
+    pat_title = re.compile(title_extract)
     for (source, pdf), startpage in zip(parts, pages):
-        with open(source, 'rb') as fd:
+        with io.open(source, encoding=encoding) as fd:
             data = fd.read()
-        author = title = ''.encode('ascii')
+        author = title = ''
         for ma in pat_author.finditer(data):
             author = ma.group(1)
         for ma in pat_title.finditer(data):
@@ -139,16 +143,16 @@ def template_contexts(parts, pages, pat_author=AUTHOR, pat_title=TITLE):
         }
 
 
-def write_contents_template(filename, pattern, template, contexts, verbose=True):
+def write_contents_template(filename, pattern, template, contexts, encoding='utf-8', verbose=True):
     if not filename:
         return False
 
-    pattern = re.compile(pattern.encode('ascii'), re.DOTALL)
+    pattern = re.compile(pattern, re.DOTALL)
 
-    with open(filename, 'rb') as fd:
+    with io.open(filename, encoding=encoding) as fd:
         old = fd.read()
 
-    substitute = string.Template(template.encode('ascii')).safe_substitute
+    substitute = string.Template(template).safe_substitute
     repl = '\n'.join(substitute(c) for c in contexts)
 
     def repl_func(match):
@@ -157,7 +161,7 @@ def write_contents_template(filename, pattern, template, contexts, verbose=True)
         group = match.group(0)
         result = group[:start] + repl + group[end:]
         if verbose:
-            print('%s\t%s' % (filename, result.decode('ascii')))
+            print('%s\t%s' % (filename, result))
         return result
 
     new, subbed = pattern.subn(repl_func, old, 1)
@@ -165,7 +169,7 @@ def write_contents_template(filename, pattern, template, contexts, verbose=True)
         raise RuntimeError
 
     if new != old:
-        with open(filename, 'wb') as fd:
+        with io.open(filename, 'w', encoding=encoding) as fd:
             fd.write(new)
         return True
     else:

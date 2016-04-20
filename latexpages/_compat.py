@@ -6,9 +6,11 @@ PY2 = sys.version_info[0] == 2
 
 
 if PY2:
+    input = raw_input
+
     apply = apply
 
-    from itertools import izip as zip
+    from itertools import imap as map, izip as zip
 
     def iteritems(d):
         return d.iteritems()
@@ -17,11 +19,14 @@ if PY2:
 
 
 else:
+    input = input
+
     def apply(object, args=(), kwargs=None):
         if kwargs is None:
             kwargs = {}
         return object(*args, **kwargs)
 
+    map = map
     zip = zip
 
     def iteritems(d):

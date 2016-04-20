@@ -25,7 +25,7 @@ def get_string(config, section, option, optional=False, default=None):
 
 def get_quoted_string(config, section, option, optional=False, default=''):
     value = get_string(config, section, option, optional=optional, default=default)
-    return value.strip('"').encode('ascii').decode('string_escape')
+    return value.strip('"').encode('ascii').decode('unicode_escape')
 
 
 def get_int(config, section, option, optional=False):
@@ -177,6 +177,8 @@ class Job(object):
 
         self.paginate_replace = string('replace')
         self.paginate_template = quoted_string('template', optional=True)
+        self.paginate_author_extract = string('author_extract', optional=True)
+        self.paginate_title_extract = string('title_extract', optional=True)
  
     def _parse_clean(self, lst, boolean, **kwargs):
         self.clean_parts = lst('parts', optional=True)

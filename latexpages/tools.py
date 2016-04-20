@@ -5,6 +5,9 @@ import os
 import signal
 import contextlib
 
+from ._compat import input, map
+
+
 __all__ = [
     'swapext', 'current_path', 'chdir',
     'confirm',
@@ -68,7 +71,7 @@ def confirm(question, default=False):
     """Prompt the user to confirm an action."""
     hint = {True: 'Y/n', False: 'y/N', None: 'y/n'}[default]
     while True:
-        answer = raw_input('%s [%s] ' % (question, hint)).strip().lower()
+        answer = input('%s [%s] ' % (question, hint)).strip().lower()
         if answer in ('y', 'yes'):
             return True
         elif answer in ('n', 'no'):
@@ -94,7 +97,7 @@ class NullPool(object):
     def map(self, func, iterable, chunksize=None):
         if chunksize not in (1, None):
             raise ValueError('%s.map() with chunksize=%r' % (self, chunksize))
-        return map(func, iterable)
+        return list(map(func, iterable))
 
     def terminate(self):
         pass

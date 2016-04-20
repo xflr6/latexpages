@@ -2,11 +2,15 @@ Latexpages Changelog
 ====================
 
 
-Version 0.5.1 (in development)
-------------------------------
+Version 0.5.1
+-------------
 
+Fixed broken python 3 compatibility.
 
+Adapted clean command for make-like invocation.
 
+Made author and title extraction regex for wip contents creation feature
+configurable and compatible with optional arguments.
 
 
 Version 0.5

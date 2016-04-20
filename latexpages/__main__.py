@@ -76,15 +76,15 @@ def main_clean():
     parser.add_argument('--version', action='version',
         version='%%(prog)s %s' % _version())
 
+    parser.add_argument('--output', dest='clean_output', action='store_true',
+        help='also delete the output directory (overrides INI file)')
+
     parser.add_argument('filename', nargs='?', default=None,
         help='INI file configuring the parts and clean options '
              '(default: %s in the current directory)' % INIFILE)
 
-    parser.add_argument('clean_output', nargs='?', choices=['yes', 'no'], default=None,
-        help='also delete the output directory (overrides INI file)')
-
     args = parser.parse_args_default_filename()
-    clean(args.filename, {'yes': True, 'no': False, None: None}[args.clean_output])
+    clean(args.filename, args.clean_output)
 
 
 def _version():
