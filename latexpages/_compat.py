@@ -8,6 +8,8 @@ PY2 = sys.version_info[0] == 2
 if PY2:
     apply = apply
 
+    from itertools import izip as zip
+
     def iteritems(d):
         return d.iteritems()
 
@@ -19,6 +21,8 @@ else:
         if kwargs is None:
             kwargs = {}
         return object(*args, **kwargs)
+
+    zip = zip
 
     def iteritems(d):
         return iter(d.items())

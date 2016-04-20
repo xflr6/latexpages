@@ -12,6 +12,8 @@ Simplified invocation: The filename argument for the commands latexpages and
 latexpages-paginate is now optional and defaults to latexpages.ini in the
 current directory (like make defaults to use Makefile).
 
+Added clean except config setting for excluding files from clean command.
+
 
 Version 0.4.3
 -------------

@@ -12,7 +12,7 @@ __all__ = ['clean']
 def clean(config, clean_output=None):
     job = jobs.Job(config)
     with tools.chdir(job.config_dir):
-        in_parts = list(matched_files(job.to_clean(), job.clean_parts))
+        in_parts = list(matched_files(job.to_clean(), job.clean_parts, job.clean_except))
         if job.clean_output or clean_output:
             in_output = list(output_files(job.directory))
             if not in_parts and not in_output:
@@ -29,7 +29,7 @@ def clean(config, clean_output=None):
                 remove(in_parts)
 
 
-def matched_files(dirs, patterns):
+def matched_files(dirs, patterns, except_patterns):
     for d in dirs:
         if os.path.isabs(d):
             raise ValueError('non-relative path: %r' % d)
@@ -39,7 +39,9 @@ def matched_files(dirs, patterns):
             if not os.path.isfile(path):
                 continue
 
-            if any(fnmatch(f, p) for p in patterns):
+            match = any(fnmatch(f, p) for p in patterns)
+            match = match and not any(fnmatch(f, e) for e in except_patterns)
+            if match:
                 yield path
 
 

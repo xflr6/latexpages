@@ -23,6 +23,11 @@ def get_string(config, section, option, optional=False, default=None):
     return value
 
 
+def get_quoted_string(config, section, option, optional=False, default=''):
+    value = get_string(config, section, option, optional=optional, default=default)
+    return value.strip('"').encode('ascii').decode('string_escape')
+
+
 def get_int(config, section, option, optional=False):
     if config.has_option(section, option):
         value = config.get(section, option).strip()
@@ -57,6 +62,8 @@ class Job(object):
 
     _get_string = staticmethod(get_string)
 
+    _get_quoted_string = staticmethod(get_quoted_string)
+
     _get_int = staticmethod(get_int)
 
     _get_list = staticmethod(get_list)
@@ -80,6 +87,7 @@ class Job(object):
         for section in self._sections:
             getters = {
                 'string': partial(self._get_string, cfg, section),
+                'quoted_string': partial(self._get_quoted_string, cfg, section),
                 'lst': partial(self._get_list, cfg, section),
                 'boolean': partial(cfg.getboolean, section),
                 'items': partial(cfg.items, section),
@@ -158,7 +166,7 @@ class Job(object):
             'ps2pdf': split('ps2pdf'),
         }
 
-    def _parse_paginate(self, string, **kwargs):
+    def _parse_paginate(self, string, quoted_string, **kwargs):
         self.paginate_update = string('update')
 
         target = string('contents', optional=True)
@@ -168,9 +176,11 @@ class Job(object):
             self.paginate_target = ''
 
         self.paginate_replace = string('replace')
-
+        self.paginate_template = quoted_string('template', optional=True)
+ 
     def _parse_clean(self, lst, boolean, **kwargs):
         self.clean_parts = lst('parts', optional=True)
+        self.clean_except = lst('except', optional=True)
         self.clean_output = boolean('output')
 
     def _iter_parts(self, groups=None):
