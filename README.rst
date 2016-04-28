@@ -332,7 +332,7 @@ License
 
 
 .. _pdfpages: http://www.ctan.org/pkg/pdfpages
-.. _pip: http://pip.readthedocs.org
+.. _pip: http://pip.readthedocs.io
 
 .. _TeX Live: http://www.tug.org/texlive/
 .. _MikTeX: http://miktex.org
