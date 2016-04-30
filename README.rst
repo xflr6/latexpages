@@ -323,6 +323,8 @@ See also
 - http://www.ctan.org/topic/confproc
 - http://www.ctan.org/pkg/pdfpages
 - http://www.ctan.org/pkg/confproc
+- http://go.warwick.ac.uk/pdfjam
+- http://community.coherentpdf.com
 
 
 License

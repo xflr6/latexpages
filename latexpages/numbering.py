@@ -2,17 +2,13 @@
 
 import io
 import re
-import errno
 import string
-import subprocess
 
 from ._compat import zip
 
-from . import jobs, tools
+from . import jobs, backend, tools
 
 __all__ = ['paginate']
-
-NPAGES = re.compile(r'^NumberOfPages: (\d+)', re.MULTILINE)
 
 
 def paginate(config):
@@ -34,6 +30,7 @@ def paginate(config):
 
 
 def startpages(pattern, parts):
+    npages = backend.Npages.get_func()
     pattern = re.compile(pattern.encode('ascii'))
     modified = False
     result = []
@@ -71,25 +68,6 @@ def replace(filename, pattern, repl, verbose=True):
         return True
     else:
         return False
-
-
-def npages(filename, pattern=NPAGES):
-    """Return the number of pages of a PDF by asking pdftk."""
-    pdftk = ['pdftk', filename, 'dump_data']
-    try:
-        metadata = subprocess.check_output(pdftk, universal_newlines=True)
-    except OSError as e:
-        if e.errno == errno.ENOENT:
-            raise RuntimeError('failed to execute %r, '
-                'make sure the pdftk executable '
-                'is on your systems\' path' % pdftk)
-        else:
-            raise
-
-    match = pattern.search(metadata)
-    if match is None:
-        raise RuntimeError
-    return int(match.group(1))
 
 
 def write_contents(filename, pattern, pages, verbose=True):

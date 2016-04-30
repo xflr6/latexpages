@@ -4,7 +4,7 @@ import os
 import shutil
 import multiprocessing
 
-from . import jobs, rendering, pdfpages, tools
+from . import jobs, backend, pdfpages, tools
 
 __all__ = ['make']
 
@@ -37,7 +37,7 @@ def compile_part(args):
     """Compile part LaTeX document to PDF."""
     job, part, filename, dvips = args
     with tools.chdir(job.config_dir, part):
-        rendering.compile(filename,
+        backend.compile(filename,
             dvips=dvips, engine=job.engine, options=job.compile_opts)
 
 

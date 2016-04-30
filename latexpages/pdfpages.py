@@ -7,7 +7,7 @@ import string
 
 from ._compat import iteritems
 
-from . import rendering, tools
+from . import backend, tools
 
 __all__ = ['Source']
 
@@ -114,7 +114,7 @@ class Source(Document, Template):
         with io.open(filename, 'w', encoding=self._encoding) as fd:
             fd.write(source)
 
-        rendering.compile(filename, view=view, engine=engine, options=options)
+        backend.compile(filename, view=view, engine=engine, options=options)
 
         if cleanup:
             self.cleanup(filename)
