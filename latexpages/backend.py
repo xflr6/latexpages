@@ -1,4 +1,4 @@
-# backend.py - compile latex to PDF, optionally open in viewer, count PDF pages
+# backend.py - compile LaTeX to PDF, optionally open in viewer, count PDF pages
 
 import os
 import re
@@ -63,7 +63,7 @@ def latexmk_compile(filename, dvips=False, view=False, options=None):
 
     with tools.chdir(compile_dir):
         try:
-            subprocess.Popen(latexmk, startupinfo=STARTUPINFO).wait()
+            subprocess.call(latexmk, startupinfo=STARTUPINFO)
         except OSError as e:
             if e.errno == errno.ENOENT:
                 raise RuntimeError('failed to execute %r, '
@@ -89,7 +89,7 @@ def texify_compile(filename, dvips=False, view=False, options=None):
 
     with tools.chdir(compile_dir):
         try:
-            subprocess.Popen(texify, startupinfo=STARTUPINFO).wait()
+            subprocess.call(texify, startupinfo=STARTUPINFO)
         except OSError as e:
             if e.errno == errno.ENOENT:
                 raise RuntimeError('failed to execute %r, '
@@ -101,11 +101,11 @@ def texify_compile(filename, dvips=False, view=False, options=None):
         if dvips:
             dvips = ['dvips', '-P', 'pdf'] + options['dvips']
             dvips.append(tools.swapext(filename, 'dvi'))
-            subprocess.Popen(dvips, startupinfo=STARTUPINFO).wait()
+            subprocess.call(dvips, startupinfo=STARTUPINFO)
 
             ps2pdf = ['ps2pdf'] + options['ps2pdf']
             ps2pdf.append(tools.swapext(filename, 'ps'))
-            subprocess.Popen(ps2pdf, startupinfo=STARTUPINFO).wait()
+            subprocess.call(ps2pdf, startupinfo=STARTUPINFO)
 
 
 @apply
