@@ -325,6 +325,7 @@ See also
 - http://www.ctan.org/pkg/confproc
 - http://go.warwick.ac.uk/pdfjam
 - http://community.coherentpdf.com
+- http://github.com/JacksonLLee/cls-proceedings
 
 
 License
