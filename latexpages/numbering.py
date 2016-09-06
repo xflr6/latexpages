@@ -116,7 +116,7 @@ def template_contexts(parts, pages, author_extract, title_extract, encoding='utf
             title = ma.group(1)
         yield {
             'author': author,
-            'title':  title,
+            'title': title,
             'startpage': startpage,
         }
 

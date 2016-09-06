@@ -30,7 +30,7 @@ def main():
     parser.add_argument('--only', dest='only', metavar='<part>', default=None,
         help='compile the given part without combining')
 
-    parser.add_argument('--processes', dest='processes', metavar='<n>', type=int,  default=None,
+    parser.add_argument('--processes', dest='processes', metavar='<n>', type=int, default=None,
         help='number of parallel processes (default: one per core)')
 
     parser.add_argument('filename', nargs='?', default=None,

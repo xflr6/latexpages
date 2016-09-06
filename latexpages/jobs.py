@@ -179,7 +179,7 @@ class Job(object):
         self.paginate_template = quoted_string('template', optional=True)
         self.paginate_author_extract = string('author_extract', optional=True)
         self.paginate_title_extract = string('title_extract', optional=True)
- 
+
     def _parse_clean(self, lst, boolean, **kwargs):
         self.clean_parts = lst('parts', optional=True)
         self.clean_except = lst('except', optional=True)
