@@ -2,8 +2,8 @@ Latexpages Changelog
 ====================
 
 
-Version 0.6 (in development)
-----------------------------
+Version 0.6
+-----------
 
 Use more widely deployed pdfinfo command (poppler-utils, miktex-poppler-bin,
 xpdf) as default page counting backend for pagination where available (fall
