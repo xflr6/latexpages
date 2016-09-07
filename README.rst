@@ -46,8 +46,10 @@ installation of the ``latexpages`` command resulting in
 The compilation requires a TeX distribution (e.g. `TeX Live`_ or MikTeX_) and
 either latexmk_ or MikTeX's texify_ utility being available on your system.
 
-The optional automatic page numbering (see below) requires the (cross-platform)
-pdftk_ command-line utility.
+The optional automatic page numbering (see below) requires either the
+``pdfinfo`` command-line utility (included in poppler_-utils,
+miktex-poppler-bin_, xpdf_), or the  pdftk_ command-line utility (both
+available cross-platform).
 
 
 Usage
@@ -134,8 +136,8 @@ according to the page count of the preceding documents' compiled PDFs.
 
     $ latexpages-paginate latexpages.ini
 
-Make sure the ``pdftk`` executable from pdftk_ is available on your systems'
-path.
+Make sure either the ``pdfinfo`` command-line tool (poppler_/xpdf_) or the
+``pdftk`` executable from pdftk_ is available on your systems' path.
 
 To use a different pattern for finding the ``\setcounter`` lines, set the
 ``update`` option in the ``paginate`` section of your INI file to a suitable
@@ -341,6 +343,9 @@ License
 .. _MikTeX: http://miktex.org
 .. _latexmk: http://users.phys.psu.edu/~collins/software/latexmk-jcc/
 .. _texify: http://docs.miktex.org/manual/texifying.html
+.. _poppler: http://poppler.freedesktop.org
+.. _miktex-poppler-bin: http://www.ctan.org/search/?phrase=miktex-poppler-bin&ext=true&FILES=on
+.. _xpdf: http://foolabs.com/xpdf/
 .. _pdftk: http://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/
 .. _regular expression: http://docs.python.org/2/library/re.html
 
