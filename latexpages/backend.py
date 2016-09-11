@@ -133,10 +133,10 @@ class Npages(object):
                 subprocess.check_call(subcls.check_cmd, startupinfo=STARTUPINFO)
             except OSError as e:
                 if e.errno == errno.ENOENT:
-                    tried.append(check_cmd)
+                    tried.append(subcls.check_cmd)
                 else:
                     raise
-            except CalledProcessError:
+            except subprocess.CalledProcessError:
                 raise RuntimeError
             else:
                 break
