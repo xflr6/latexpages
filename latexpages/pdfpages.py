@@ -33,11 +33,11 @@ class Template(object):
 
 
 class Document(object):
-    """Document body with \\includepdfmerge commands."""
+    r"""Document body with \includepdfmerge commands."""
 
-    _pagenumbering = '\\pagenumbering{%s}'
+    _pagenumbering = r'\pagenumbering{%s}'
 
-    _includepdf = '\\includepdfmerge[%s]{%s}'
+    _includepdf = r'\includepdfmerge[%s]{%s}'
 
     _includepdfopts = {
         False: 'fitpaper',
