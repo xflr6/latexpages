@@ -1,7 +1,7 @@
 # exact dependency versions used in development
 # dependencies for testing and building
+nose
 coverage
 flake8
-nose
 pep8-naming
 wheel
