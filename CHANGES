@@ -5,7 +5,10 @@ Latexpages Changelog
 Version 0.6.1 (in development)
 ------------------------------
 
+Drop workaround for wheel console_script launcher bug under Windows
+(pypa/pip#1891) from docs.
 
+Enable multiprocessing in __main__.py invocation for 2.7.11+ under Windows.
 
 
 Version 0.6
