@@ -2,8 +2,8 @@ Latexpages Changelog
 ====================
 
 
-Version 0.6.1 (in development)
-------------------------------
+Version 0.6.1
+-------------
 
 Drop workaround for wheel console_script launcher bug under Windows
 (pypa/pip#1891) from docs.
