@@ -39,8 +39,8 @@ def matched_files(dirs, patterns, except_patterns):
             if not os.path.isfile(path):
                 continue
 
-            match = any(fnmatch(f, p) for p in patterns)
-            match = match and not any(fnmatch(f, e) for e in except_patterns)
+            match = any(fnmatch(path, p) for p in patterns)
+            match = match and not any(fnmatch(path, e) for e in except_patterns)
             if match:
                 yield path
 
