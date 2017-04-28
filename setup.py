@@ -10,7 +10,7 @@ setup(
     description='Combine LaTeX docs into a single PDF',
     keywords='pdfpages parallel compilation proceedings',
     license='MIT',
-    url='http://github.com/xflr6/latexpages',
+    url='https://github.com/xflr6/latexpages',
     packages=find_packages(),
     package_data={'latexpages': ['template.tex', 'settings.ini']},
     zip_safe=False,

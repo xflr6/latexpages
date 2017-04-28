@@ -25,7 +25,7 @@ def make(config, processes=None, engine=None, cleanup=True, only=None):
         pool.map(compile_part, job.to_compile(), chunksize=1)
         copy_parts(job)
         pool.map(combine_parts, job.to_combine(), chunksize=1)
-    except KeyboardInterrupt:  # http://bugs.python.org/issue8296
+    except KeyboardInterrupt:  # https://bugs.python.org/issue8296
         pool.terminate()
     else:
         pool.close()

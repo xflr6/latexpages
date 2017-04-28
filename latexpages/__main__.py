@@ -41,9 +41,9 @@ def main():
 
     if (__name__ == '__main__' and sys.platform == 'win32' and args.processes != 1 and
         (sys.version_info[:3] < (2, 7, 11) or (3, 0) <= sys.version_info[:2] < (3, 2))):
-        # http://bugs.python.org/issue17101
-        # http://bugs.python.org/issue10845
-        # http://bugs.python.org/issue10128
+        # https://bugs.python.org/issue17101
+        # https://bugs.python.org/issue10845
+        # https://bugs.python.org/issue10128
         raise NotImplementedError('__main__.py invocation is not compatible with '
             'multiprocessing in Python %d.%d.%d under Windows. '
             'Use the latexpages command from the Python "Scripts" directory instead. '

@@ -20,10 +20,10 @@ packages/options, latex-dvips-ps2pdf vs. pdflatex, etc.).
 Links
 -----
 
-- GitHub: http://github.com/xflr6/latexpages
-- PyPI: http://pypi.python.org/pypi/latexpages
-- Issue Tracker: http://github.com/xflr6/latexpages/issues
-- Download: http://pypi.python.org/pypi/latexpages#downloads
+- GitHub: https://github.com/xflr6/latexpages
+- PyPI: https://pypi.python.org/pypi/latexpages
+- Issue Tracker: https://github.com/xflr6/latexpages/issues
+- Download: https://pypi.python.org/pypi/latexpages#downloads
 
 
 Installation
@@ -313,13 +313,13 @@ Finally, the ``paginate`` section controls ``latexpages-paginate`` (see above).
 See also
 --------
 
-- http://www.ctan.org/topic/compilation
-- http://www.ctan.org/topic/confproc
-- http://www.ctan.org/pkg/pdfpages
-- http://www.ctan.org/pkg/confproc
+- https://www.ctan.org/topic/compilation
+- https://www.ctan.org/topic/confproc
+- https://www.ctan.org/pkg/pdfpages
+- https://www.ctan.org/pkg/confproc
 - http://go.warwick.ac.uk/pdfjam
 - http://community.coherentpdf.com
-- http://github.com/JacksonLLee/cls-proceedings
+- https://github.com/JacksonLLee/cls-proceedings
 
 
 License
@@ -328,24 +328,24 @@ License
 ``latexpages`` is distributed under the `MIT license`_.
 
 
-.. _pdfpages: http://www.ctan.org/pkg/pdfpages
-.. _pip: http://pip.readthedocs.io
+.. _pdfpages: https://www.ctan.org/pkg/pdfpages
+.. _pip: https://pip.readthedocs.io
 
-.. _TeX Live: http://www.tug.org/texlive/
-.. _MikTeX: http://miktex.org
-.. _latexmk: http://users.phys.psu.edu/~collins/software/latexmk-jcc/
-.. _texify: http://docs.miktex.org/manual/texifying.html
-.. _poppler: http://poppler.freedesktop.org
-.. _miktex-poppler-bin: http://www.ctan.org/search/?phrase=miktex-poppler-bin&ext=true&FILES=on
+.. _TeX Live: https://www.tug.org/texlive/
+.. _MikTeX: https://miktex.org
+.. _latexmk: http://personal.psu.edu/jcc8/software/latexmk-jcc/
+.. _texify: https://docs.miktex.org/manual/texifying.html
+.. _poppler: https://poppler.freedesktop.org
+.. _miktex-poppler-bin: https://www.ctan.org/search/?phrase=miktex-poppler-bin&ext=true&FILES=on
 .. _xpdf: http://foolabs.com/xpdf/
-.. _pdftk: http://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/
-.. _regular expression: http://docs.python.org/2/library/re.html
+.. _pdftk: https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/
+.. _regular expression: https://docs.python.org/2/library/re.html
 
-.. _example directory: http://github.com/xflr6/latexpages/tree/master/example
+.. _example directory: https://github.com/xflr6/latexpages/tree/master/example
 
-.. _templates: http://docs.python.org/2/library/stdtypes.html#string-formatting
+.. _templates: https://docs.python.org/2/library/stdtypes.html#string-formatting
 
-.. _MIT license: http://opensource.org/licenses/MIT
+.. _MIT license: https://opensource.org/licenses/MIT
 
 
 .. |--| unicode:: U+2013
