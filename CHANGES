@@ -7,6 +7,8 @@ Version 0.6.3 (in development)
 
 Drop Pyton 3.3 support.
 
+Include license file in wheel.
+
 
 Version 0.6.2
 -------------
