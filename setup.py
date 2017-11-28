@@ -12,14 +12,18 @@ setup(
     license='MIT',
     url='https://github.com/xflr6/latexpages',
     packages=find_packages(),
-    package_data={'latexpages': ['template.tex', 'settings.ini']},
-    zip_safe=False,
     entry_points={'console_scripts': [
         'latexpages=latexpages.__main__:main',
         'latexpages-paginate=latexpages.__main__:main_paginate',
         'latexpages-clean=latexpages.__main__:main_clean'
     ]},
+    package_data={'latexpages': ['template.tex', 'settings.ini']},
+    zip_safe=False,
     platforms='any',
+    python_requires='>=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*',
+    extras_require={
+        'dev': ['flake8', 'pep8-naming', 'wheel', 'twine'],
+    },
     long_description=open('README.rst').read(),
     classifiers=[
         'Development Status :: 4 - Beta',
