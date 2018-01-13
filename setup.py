@@ -1,5 +1,6 @@
 # setup.py
 
+import io
 from setuptools import setup, find_packages
 
 setup(
@@ -24,7 +25,7 @@ setup(
     extras_require={
         'dev': ['flake8', 'pep8-naming', 'wheel', 'twine'],
     },
-    long_description=open('README.rst').read(),
+    long_description=io.open('README.rst', encoding='utf-8').read(),
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Console',
