@@ -18,8 +18,8 @@ def make(config, processes=None, engine=None, cleanup=True, only=None):
         compile_part(args)
         return
 
-    Pool = multiprocessing.Pool if job.processes != 1 else tools.NullPool
-    pool = Pool(job.processes, tools.ignore_sigint)
+    pool_cls = multiprocessing.Pool if job.processes != 1 else tools.NullPool
+    pool = pool_cls(job.processes, tools.ignore_sigint)
 
     try:
         pool.map(compile_part, job.to_compile(), chunksize=1)

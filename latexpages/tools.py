@@ -53,10 +53,7 @@ def chdir(*paths):
     paths = [p if p is not None else '' for p in paths]
     path = os.path.join(*paths)
     if not path:
-        try:
-            yield
-        finally:
-            pass
+        yield
         return
 
     oldwd = os.getcwd()
