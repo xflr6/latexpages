@@ -21,9 +21,9 @@ Links
 -----
 
 - GitHub: https://github.com/xflr6/latexpages
-- PyPI: https://pypi.python.org/pypi/latexpages
+- PyPI: https://pypi.org/project/latexpages/
 - Issue Tracker: https://github.com/xflr6/latexpages/issues
-- Download: https://pypi.python.org/pypi/latexpages#downloads
+- Download: https://pypi.org/project/latexpages/#files
 
 
 Installation
@@ -352,17 +352,14 @@ License
 
 
 .. |PyPI version| image:: https://img.shields.io/pypi/v/latexpages.svg
-    :target: https://pypi.python.org/pypi/latexpages
+    :target: https://pypi.org/project/latexpages/
     :alt: Latest PyPI Version
 .. |License| image:: https://img.shields.io/pypi/l/latexpages.svg
-    :target: https://pypi.python.org/pypi/latexpages
+    :target: https://pypi.org/project/latexpages/
     :alt: License
 .. |Supported Python| image:: https://img.shields.io/pypi/pyversions/latexpages.svg
-    :target: https://pypi.python.org/pypi/latexpages
+    :target: https://pypi.org/project/latexpages/
     :alt: Supported Python Versions
 .. |Format| image:: https://img.shields.io/pypi/format/latexpages.svg
-    :target: https://pypi.python.org/pypi/latexpages
+    :target: https://pypi.org/project/latexpages/
     :alt: Format
-.. |Downloads| image:: https://img.shields.io/pypi/dm/latexpages.svg
-    :target: https://pypi.python.org/pypi/latexpages
-    :alt: Downloads
