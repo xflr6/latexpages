@@ -158,13 +158,8 @@ class Job(object):
         self.context = {k: v.strip() for k, v in items()}
 
     def _parse_compile(self, string, **kwargs):
-        split = lambda key: shlex.split(string(key, optional=True, default=''))
-        self.compile_opts = {
-            'latexmk': split('latexmk'),
-            'texify': split('texify'),
-            'dvips': split('dvips'),
-            'ps2pdf': split('ps2pdf'),
-        }
+        self.compile_opts = {k: shlex.split(string(k, optional=True, default=''))
+                             for k in ('latexmk', 'texify', 'dvips', 'ps2pdf')}
 
     def _parse_paginate(self, string, quoted_string, **kwargs):
         self.paginate_update = string('update')
