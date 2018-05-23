@@ -2,10 +2,10 @@ Latexpages Changelog
 ====================
 
 
-Version 0.6.4 (in development)
-------------------------------
+Version 0.6.4
+-------------
 
-
+Add python_requires, update package scaffolding and project links.
 
 
 Version 0.6.3
