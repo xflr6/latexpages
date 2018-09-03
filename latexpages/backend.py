@@ -14,19 +14,25 @@ __all__ = ['compile', 'Npages']
 
 PLATFORM = platform.system().lower()
 
-STARTUPINFO = None
-
-if PLATFORM == 'windows':
-    STARTUPINFO = subprocess.STARTUPINFO()
-    STARTUPINFO.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-    STARTUPINFO.wShowWindow = subprocess.SW_HIDE
-
 OPTS = {
     'latexmk': ['-silent'],
     'texify': ['--batch', '--verbose', '--quiet'],
     'dvvips': ['-q'],
     'ps2pdf': [],
 }
+
+
+if PLATFORM == 'windows':
+    def get_startupinfo():
+        """Return subprocess.STARTUPINFO instance hiding the console window."""
+        startupinfo = subprocess.STARTUPINFO()
+        startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+        startupinfo.wShowWindow = subprocess.SW_HIDE
+        return startupinfo
+else:
+    def get_startupinfo():
+        """Return None for startupinfo argument of ``subprocess.Popen``."""
+        return None
 
 
 def compile(filename, dvips=False, view=False, engine=None, options=None):
@@ -63,7 +69,7 @@ def latexmk_compile(filename, dvips=False, view=False, options=None):
 
     with tools.chdir(compile_dir):
         try:
-            subprocess.call(latexmk, startupinfo=STARTUPINFO)
+            subprocess.call(latexmk, startupinfo=get_startupinfo())
         except OSError as e:
             if e.errno == errno.ENOENT:
                 raise RuntimeError('failed to execute %r, '
@@ -89,7 +95,7 @@ def texify_compile(filename, dvips=False, view=False, options=None):
 
     with tools.chdir(compile_dir):
         try:
-            subprocess.call(texify, startupinfo=STARTUPINFO)
+            subprocess.call(texify, startupinfo=get_startupinfo())
         except OSError as e:
             if e.errno == errno.ENOENT:
                 raise RuntimeError('failed to execute %r, '
@@ -101,11 +107,11 @@ def texify_compile(filename, dvips=False, view=False, options=None):
         if dvips:
             dvips = ['dvips', '-P', 'pdf'] + options['dvips']
             dvips.append(tools.swapext(filename, 'dvi'))
-            subprocess.call(dvips, startupinfo=STARTUPINFO)
+            subprocess.call(dvips, startupinfo=get_startupinfo())
 
             ps2pdf = ['ps2pdf'] + options['ps2pdf']
             ps2pdf.append(tools.swapext(filename, 'ps'))
-            subprocess.call(ps2pdf, startupinfo=STARTUPINFO)
+            subprocess.call(ps2pdf, startupinfo=get_startupinfo())
 
 
 @apply
@@ -130,7 +136,7 @@ class Npages(object):
         tried = []
         for subcls in cls.__subclasses__():
             try:
-                subprocess.check_call(subcls.check_cmd, startupinfo=STARTUPINFO)
+                subprocess.check_call(subcls.check_cmd, startupinfo=get_startupinfo())
             except OSError as e:
                 if e.errno == errno.ENOENT:
                     tried.append(subcls.check_cmd)
@@ -157,7 +163,7 @@ class Npages(object):
         cmd = self.make_cmd(filename)
         try:
             result = subprocess.check_output(cmd,
-                stderr=subprocess.STDOUT, startupinfo=STARTUPINFO,
+                stderr=subprocess.STDOUT, startupinfo=get_startupinfo(),
                 universal_newlines=True)
         except OSError as e:
             if e.errno == errno.ENOENT:
