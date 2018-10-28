@@ -39,8 +39,8 @@ def main():
 
     args = parser.parse_args_default_filename()
 
-    if (__name__ == '__main__' and sys.platform == 'win32' and args.processes != 1 and
-        (sys.version_info < (2, 7, 11) or (3, 0) <= sys.version_info < (3, 2))):
+    if (__name__ == '__main__' and sys.platform == 'win32' and args.processes != 1
+       and (sys.version_info < (2, 7, 11) or (3, 0) <= sys.version_info < (3, 2))):
         # https://bugs.python.org/issue17101
         # https://bugs.python.org/issue10845
         # https://bugs.python.org/issue10128
