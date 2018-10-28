@@ -2,8 +2,8 @@ Latexpages Changelog
 ====================
 
 
-Version 0.6.5 (in development)
-------------------------------
+Version 0.6.5
+-------------
 
 Tag Python 3.7 support, stop reusing subprocess.STARTUPINFO instances.
 
