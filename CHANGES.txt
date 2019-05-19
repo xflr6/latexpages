@@ -5,7 +5,7 @@ Latexpages Changelog
 Version 0.6.6 (in development)
 ------------------------------
 
-
+Drop Pytjon 3.4 support.
 
 
 Version 0.6.5
