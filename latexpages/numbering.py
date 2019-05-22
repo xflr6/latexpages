@@ -114,11 +114,9 @@ def template_contexts(parts, pages, author_extract, title_extract, encoding='utf
             author = ma.group(1)
         for ma in pat_title.finditer(data):
             title = ma.group(1)
-        yield {
-            'author': author,
-            'title': title,
-            'startpage': startpage,
-        }
+        yield {'author': author,
+               'title': title,
+               'startpage': startpage}
 
 
 def write_contents_template(filename, pattern, template, contexts, encoding='utf-8', verbose=True):

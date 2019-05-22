@@ -58,7 +58,7 @@ class Job(object):
     _defaults = tools.current_path('settings.ini')
 
     _sections = ('make', 'parts', 'template', 'substitute', 'compile',
-        'paginate', 'clean')
+                 'paginate', 'clean')
 
     _get_string = staticmethod(get_string)
 
@@ -133,14 +133,16 @@ class Job(object):
             raise ValueError(notfound)
 
         self._groups = [(front, self._front_name),
-            (main, self._main_name), (extras, self._extras_name)]
+                        (main, self._main_name),
+                        (extras, self._extras_name)]
         self._dvips = dvips
         self._first_to_front = boolean('first_to_front')
 
     def _parse_template(self, string, **kwargs):
         self.template = self._get_path(string('filename', optional=True))
-        self.template_two_up = self._get_path(
-            string('filename_two_up', optional=True), self.template)
+        self.template_two_up = self._get_path(string('filename_two_up',
+                                                     optional=True),
+                                              self.template)
 
         self.documentclass = string('class')
 
@@ -185,13 +187,10 @@ class Job(object):
             groups = self._groups
         for parts, tmpl in groups:
             for i, part in enumerate(parts):
-                context = {
-                    'name': self.name,
-                    'part': part,
-                    'index0': i,
-                    'index1': i + 1,
-                }
-                name = tmpl % context
+                name = tmpl % {'name': self.name,
+                               'part': part,
+                               'index0': i,
+                               'index1': i + 1}
                 yield part, name
 
     def to_compile(self):

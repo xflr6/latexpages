@@ -39,10 +39,8 @@ class Document(object):
 
     _includepdf = r'\includepdfmerge[%s]{%s}'
 
-    _includepdfopts = {
-        False: 'fitpaper',
-        True: 'nup=2x1,openright',
-    }
+    _includepdfopts = {False: 'fitpaper',
+                       True: 'nup=2x1,openright'}
 
     def __init__(self, includepdfopts=None):
         if includepdfopts is not None:
@@ -74,10 +72,8 @@ class Source(Document, Template):
 
     _documentclass = 'scrartcl'
 
-    _documentopts = {
-        False: 'paper=a5',
-        True: 'paper=a4,landscape',
-    }
+    _documentopts = {False: 'paper=a5',
+                     True: 'paper=a4,landscape'}
 
     def __init__(self, frontmatter, mainmatter, context=None, template=None,
                  includepdfopts=None, documentclass=None, documentopts=None):

@@ -37,11 +37,9 @@ else:
 
 def compile(filename, dvips=False, view=False, engine=None, options=None):
     """Compile LaTeX file to PDF using either latexmk.pl or texify.exe."""
-    compile_funcs = {
-        'latexmk': latexmk_compile,
-        'texify': texify_compile,
-        None: default_compile,
-    }
+    compile_funcs = {'latexmk': latexmk_compile,
+                     'texify': texify_compile,
+                     None: default_compile}
     if engine not in compile_funcs:
         raise ValueError('unknown engine: %r' % (engine,))
     compile_funcs[engine](filename, dvips, view, options)
@@ -73,8 +71,8 @@ def latexmk_compile(filename, dvips=False, view=False, options=None):
         except OSError as e:
             if e.errno == errno.ENOENT:
                 raise RuntimeError('failed to execute %r, '
-                    'make sure the latexmk executable '
-                    'is on your systems\' path' % latexmk)
+                                   'make sure the latexmk executable '
+                                   'is on your systems\' path' % latexmk)
             else:
                 raise
 
@@ -99,8 +97,8 @@ def texify_compile(filename, dvips=False, view=False, options=None):
         except OSError as e:
             if e.errno == errno.ENOENT:
                 raise RuntimeError('failed to execute %r, '
-                    'make sure the MikTeX executables '
-                    'are on your systems\' path' % texify)
+                                   'make sure the MikTeX executables '
+                                   'are on your systems\' path' % texify)
             else:
                 raise
 
@@ -116,11 +114,9 @@ def texify_compile(filename, dvips=False, view=False, options=None):
 
 @apply
 def default_compile(platform=PLATFORM):
-    compile_funcs = {
-        'darwin': latexmk_compile,
-        'linux': latexmk_compile,
-        'windows': texify_compile,
-    }
+    compile_funcs = {'darwin': latexmk_compile,
+                     'linux': latexmk_compile,
+                     'windows': texify_compile}
     return compile_funcs.get(platform, no_compile)
 
 
@@ -136,7 +132,8 @@ class Npages(object):
         tried = []
         for subcls in cls.__subclasses__():
             try:
-                subprocess.check_call(subcls.check_cmd, startupinfo=get_startupinfo())
+                subprocess.check_call(subcls.check_cmd,
+                                      startupinfo=get_startupinfo())
             except OSError as e:
                 if e.errno == errno.ENOENT:
                     tried.append(subcls.check_cmd)
@@ -149,8 +146,8 @@ class Npages(object):
         else:
             tried = ' and '.join(repr(check_cmd) for check_cmd in tried)
             raise RuntimeError('failed to execute %s, '
-                'make sure the pdfinfo or pdftk executable '
-                'is on your systems\' path' % tried)
+                               'make sure the pdfinfo or pdftk executable '
+                               'is on your systems\' path' % tried)
 
         result = cls._cache = subcls()
         return result
@@ -163,13 +160,14 @@ class Npages(object):
         cmd = self.make_cmd(filename)
         try:
             result = subprocess.check_output(cmd,
-                stderr=subprocess.STDOUT, startupinfo=get_startupinfo(),
-                universal_newlines=True)
+                                             stderr=subprocess.STDOUT,
+                                             startupinfo=get_startupinfo(),
+                                             universal_newlines=True)
         except OSError as e:
             if e.errno == errno.ENOENT:
                 raise RuntimeError('failed to execute %r, '
-                    'make sure the pdfinfo or pdftk executable '
-                    'is on your systems\' path' % cmd)
+                                   'make sure the pdfinfo or pdftk executable '
+                                   'is on your systems\' path' % cmd)
             else:
                 raise
 

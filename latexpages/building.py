@@ -37,8 +37,8 @@ def compile_part(args):
     """Compile part LaTeX document to PDF."""
     job, part, filename, dvips = args
     with tools.chdir(job.config_dir, part):
-        backend.compile(filename,
-            dvips=dvips, engine=job.engine, options=job.compile_opts)
+        backend.compile(filename, dvips=dvips, engine=job.engine,
+                        options=job.compile_opts)
 
 
 def copy_parts(job):
@@ -55,8 +55,8 @@ def combine_parts(args):
     job, outname, template, prelims, filenames, two_up = args
     with tools.chdir(job.config_dir, job.directory):
         document = pdfpages.Source(prelims, filenames,
-            job.context, template, job.includepdfopts,
-            job.documentclass, job.documentopts)
+                                   job.context, template, job.includepdfopts,
+                                   job.documentclass, job.documentopts)
         document.render(tools.swapext(outname, 'tex'),
-            two_up=two_up, engine=job.engine, options=job.compile_opts,
-            cleanup=job.cleanup)
+                        two_up=two_up, engine=job.engine,
+                        options=job.compile_opts, cleanup=job.cleanup)
