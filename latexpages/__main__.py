@@ -72,7 +72,7 @@ def main_paginate():
 def main_clean():
     """Run the command-line interface for the clean utility."""
     parser = ArgumentParser(prog='latexpages-clean',
-        description='')
+        description='Lists intermediate files to delete and deletes them on confirmation.')
 
     parser.add_argument('--version', action='version',
         version='%%(prog)s %s' % _version())
