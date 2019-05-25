@@ -10,7 +10,8 @@ if PY2:
 
     apply = apply
 
-    from itertools import imap as map, izip as zip
+    from itertools import (imap as map,
+                           izip as zip)
 
     def iteritems(d):
         return d.iteritems()
