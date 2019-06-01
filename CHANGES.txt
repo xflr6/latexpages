@@ -1,5 +1,5 @@
-Latexpages Changelog
-====================
+Changelog
+=========
 
 
 Version 0.6.7 (in development)
