@@ -9,7 +9,7 @@ from .cleaning import clean
 __all__ = ['make', 'paginate', 'clean']
 
 __title__ = 'latexpages'
-__version__ = '0.6.7.dev0'
+__version__ = '0.6.7'
 __author__ = 'Sebastian Bank <sebastian.bank@uni-leipzig.de>'
 __license__ = 'MIT, see LICENSE.txt'
-__copyright__ = 'Copyright (c) 2014-2018 Sebastian Bank'
+__copyright__ = 'Copyright (c) 2014-2019 Sebastian Bank'
