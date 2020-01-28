@@ -12,6 +12,9 @@ setup(
     keywords='pdfpages parallel compilation proceedings',
     license='MIT',
     url='https://github.com/xflr6/latexpages',
+    project_urls={
+        'Issue Tracker': 'https://github.com/xflr6/latexpages/issues',
+    },
     packages=find_packages(),
     entry_points={'console_scripts': [
         'latexpages=latexpages.__main__:main',
