@@ -29,7 +29,7 @@
 ]{geometry}
 
 % page head, page foot
-\RequirePackage{scrpage2}
+\RequirePackage{scrlayer-scrpage}
 \pagestyle{scrheadings}
 
 % twoside
