@@ -6,7 +6,9 @@ import string
 
 from ._compat import zip
 
-from . import jobs, backend, tools
+from . import backend
+from . import jobs
+from . import tools
 
 __all__ = ['paginate']
 

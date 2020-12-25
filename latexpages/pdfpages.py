@@ -1,13 +1,14 @@
 # pdfpages.py - concatenate pdf files with the latex pdfpages package
 
-import os
-import io
 import glob
+import io
+import os
 import string
 
 from ._compat import iteritems
 
-from . import backend, tools
+from . import backend
+from . import tools
 
 __all__ = ['Source']
 

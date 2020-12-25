@@ -1,8 +1,8 @@
 # jobs.py - parse .ini-style config file into function call args
 
+from functools import partial
 import os
 import shlex
-from functools import partial
 
 from ._compat import ConfigParser
 

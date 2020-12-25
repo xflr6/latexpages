@@ -1,10 +1,11 @@
 # cleaning.py - remove intermediate and/or output files
 
+from fnmatch import fnmatch
 import os
 import shutil
-from fnmatch import fnmatch
 
-from . import jobs, tools
+from . import jobs
+from . import tools
 
 __all__ = ['clean']
 

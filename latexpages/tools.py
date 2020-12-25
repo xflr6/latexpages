@@ -1,18 +1,16 @@
 # tools.py - path and filename manipulations
 
-import sys
+import contextlib
 import os
 import signal
-import contextlib
+import sys
 
 from ._compat import input, map
 
 
-__all__ = [
-    'swapext', 'current_path', 'chdir',
-    'confirm',
-    'ignore_sigint', 'NullPool',
-]
+__all__ = ['swapext', 'current_path', 'chdir',
+           'confirm',
+           'ignore_sigint', 'NullPool']
 
 
 def swapext(filename, extension, delimiter='.'):

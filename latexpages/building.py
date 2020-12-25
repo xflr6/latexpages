@@ -1,10 +1,13 @@
 # building.py - compile parts, copy to output, combine, combine two_up
 
+import multiprocessing
 import os
 import shutil
-import multiprocessing
 
-from . import jobs, backend, pdfpages, tools
+from . import backend
+from . import jobs
+from . import pdfpages
+from . import tools
 
 __all__ = ['make']
 

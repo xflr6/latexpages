@@ -1,9 +1,9 @@
 # backend.py - compile LaTeX to PDF, optionally open in viewer, count PDF pages
 
-import os
-import re
 import errno
+import os
 import platform
+import re
 import subprocess
 
 from ._compat import apply
@@ -14,12 +14,10 @@ __all__ = ['compile', 'Npages']
 
 PLATFORM = platform.system().lower()
 
-OPTS = {
-    'latexmk': ['-silent'],
-    'texify': ['--batch', '--verbose', '--quiet'],
-    'dvvips': ['-q'],
-    'ps2pdf': [],
-}
+OPTS = {'latexmk': ['-silent'],
+        'texify': ['--batch', '--verbose', '--quiet'],
+        'dvvips': ['-q'],
+        'ps2pdf': []}
 
 
 if PLATFORM == 'windows':
