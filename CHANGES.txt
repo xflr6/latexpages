@@ -2,8 +2,10 @@ Changelog
 =========
 
 
-Version 0.6.8 (in development)
-------------------------------
+Version 0.6.8
+-------------
+
+Fix example: replace scrpage2 with successor scrlayer-scrpage.
 
 Drop Python 3.5 support and tag Python 3.9 support.
 

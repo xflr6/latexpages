@@ -9,7 +9,7 @@ from .numbering import paginate
 __all__ = ['make', 'paginate', 'clean']
 
 __title__ = 'latexpages'
-__version__ = '0.6.8.dev0'
+__version__ = '0.6.8'
 __author__ = 'Sebastian Bank <sebastian.bank@uni-leipzig.de>'
 __license__ = 'MIT, see LICENSE.txt'
-__copyright__ = 'Copyright (c) 2014-2019 Sebastian Bank'
+__copyright__ = 'Copyright (c) 2014-2020 Sebastian Bank'

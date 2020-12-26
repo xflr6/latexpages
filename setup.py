@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='latexpages',
-    version='0.6.8.dev0',
+    version='0.6.8',
     author='Sebastian Bank',
     author_email='sebastian.bank@uni-leipzig.de',
     description='Combine LaTeX docs into a single PDF',
