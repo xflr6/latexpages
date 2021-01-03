@@ -1,10 +1,9 @@
 # jobs.py - parse .ini-style config file into function call args
 
+import configparser
 from functools import partial
 import os
 import shlex
-
-from ._compat import ConfigParser
 
 from . import tools
 
@@ -76,7 +75,7 @@ class Job(object):
             return default
 
     def __init__(self, filename, processes=None, engine=None, cleanup=True):
-        cfg = ConfigParser()
+        cfg = configparser.ConfigParser()
         if not os.path.exists(filename):
             raise ValueError('file not found: %r' % filename)
         parsed = cfg.read([self._defaults, filename])

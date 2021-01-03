@@ -1,10 +1,7 @@
 # numbering.py - update start pages, update table of contents (8-bit safe)
 
-import io
 import re
 import string
-
-from ._compat import zip
 
 from . import backend
 from . import jobs
@@ -109,7 +106,7 @@ def template_contexts(parts, pages, author_extract, title_extract, encoding='utf
     pat_author = re.compile(author_extract)
     pat_title = re.compile(title_extract)
     for (source, pdf), startpage in zip(parts, pages):
-        with io.open(source, encoding=encoding) as fd:
+        with open(source, encoding=encoding) as fd:
             data = fd.read()
         author = title = ''
         for ma in pat_author.finditer(data):
@@ -127,7 +124,7 @@ def write_contents_template(filename, pattern, template, contexts, encoding='utf
 
     pattern = re.compile(pattern, re.DOTALL)
 
-    with io.open(filename, encoding=encoding) as fd:
+    with open(filename, encoding=encoding) as fd:
         old = fd.read()
 
     substitute = string.Template(template).safe_substitute
@@ -147,7 +144,7 @@ def write_contents_template(filename, pattern, template, contexts, encoding='utf
         raise RuntimeError
 
     if new != old:
-        with io.open(filename, 'w', encoding=encoding) as fd:
+        with open(filename, 'w', encoding=encoding) as fd:
             fd.write(new)
         return True
     else:

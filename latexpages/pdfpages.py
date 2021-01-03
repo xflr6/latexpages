@@ -1,11 +1,8 @@
 # pdfpages.py - concatenate pdf files with the latex pdfpages package
 
 import glob
-import io
 import os
 import string
-
-from ._compat import iteritems
 
 from . import backend
 from . import tools
@@ -24,7 +21,7 @@ class Template(object):
         if filename is None:
             filename = self._filename
 
-        with io.open(filename, encoding=self._encoding) as fd:
+        with open(filename, encoding=self._encoding) as fd:
             data = fd.read()
 
         self._template = string.Template(data)
@@ -83,7 +80,7 @@ class Source(Document, Template):
 
         if context is None:
             context = {}
-        self._context = {k.upper(): v for k, v in iteritems(context)}
+        self._context = {k.upper(): v for k, v in context.items()}
 
         Template.__init__(self, template)
 
@@ -108,7 +105,7 @@ class Source(Document, Template):
                options=None, cleanup=False):
         source = self.source(two_up)
 
-        with io.open(filename, 'w', encoding=self._encoding) as fd:
+        with open(filename, 'w', encoding=self._encoding) as fd:
             fd.write(source)
 
         backend.compile(filename, view=view, engine=engine, options=options)

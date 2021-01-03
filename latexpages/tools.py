@@ -5,9 +5,6 @@ import os
 import signal
 import sys
 
-from ._compat import input, map
-
-
 __all__ = ['swapext', 'current_path', 'chdir',
            'confirm',
            'ignore_sigint', 'NullPool']

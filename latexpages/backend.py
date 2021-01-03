@@ -6,8 +6,6 @@ import platform
 import re
 import subprocess
 
-from ._compat import apply
-
 from . import tools
 
 __all__ = ['compile', 'Npages']
@@ -31,6 +29,12 @@ else:
     def get_startupinfo():
         """Return None for startupinfo argument of ``subprocess.Popen``."""
         return None
+
+
+def apply(object, args=(), kwargs=None):
+        if kwargs is None:
+            kwargs = {}
+        return object(*args, **kwargs)
 
 
 def compile(filename, dvips=False, view=False, engine=None, options=None):
