@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='latexpages',
-    version='0.6.9.dev0',
+    version='0.7.dev0',
     author='Sebastian Bank',
     author_email='sebastian.bank@uni-leipzig.de',
     description='Combine LaTeX docs into a single PDF',
@@ -24,7 +24,7 @@ setup(
     package_data={'latexpages': ['template.tex', 'settings.ini']},
     zip_safe=False,
     platforms='any',
-    python_requires='>=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*',
+    python_requires='>=3.6',
     extras_require={
         'dev': ['flake8', 'pep8-naming', 'wheel', 'twine'],
     },
@@ -36,8 +36,6 @@ setup(
         'Intended Audience :: Science/Research',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
