@@ -20,21 +20,20 @@ def clean(config, clean_output=None):
                 return
             print('\n'.join(in_parts))
             print('\n'.join(in_output))
-            msg = ('...delete %d files matched in parts and %d files '
-                   'removing %s?' % (len(in_parts), len(in_output),
-                                     job.directory))
+            msg = (f'...delete {len(in_parts)} files matched in parts'
+                   f' and {len(in_output)} files removing {job.directory}?')
             if tools.confirm(msg):
                 remove(in_parts, job.directory)
         elif in_parts:
             print('\n'.join(in_parts))
-            if tools.confirm('...delete %d files matched in parts?' % len(in_parts)):
+            if tools.confirm(f'...delete {len(in_parts)} files matched in parts?'):
                 remove(in_parts)
 
 
 def matched_files(dirs, patterns, except_patterns):
     for d in dirs:
         if os.path.isabs(d):
-            raise ValueError('non-relative path: %r' % d)
+            raise ValueError(f'non-relative path: {d!r}')
 
         for f in sorted(os.listdir(d)):
             path = os.path.join(d, f)
@@ -49,7 +48,7 @@ def matched_files(dirs, patterns, except_patterns):
 
 def output_files(directory):
     if os.path.isabs(directory):
-        raise ValueError('non-relative path: %r' % directory)
+        raise ValueError(f'non-relative path: {directory!r}')
 
     for root, dirs, files in os.walk(directory):
         for f in sorted(files):

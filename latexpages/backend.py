@@ -43,7 +43,7 @@ def compile(filename, dvips=False, view=False, engine=None, options=None):
                      'texify': texify_compile,
                      None: default_compile}
     if engine not in compile_funcs:
-        raise ValueError('unknown engine: %r' % (engine,))
+        raise ValueError(f'unknown engine: {engine!r}')
     compile_funcs[engine](filename, dvips, view, options)
 
 
@@ -72,9 +72,9 @@ def latexmk_compile(filename, dvips=False, view=False, options=None):
             subprocess.call(latexmk, startupinfo=get_startupinfo())
         except OSError as e:
             if e.errno == errno.ENOENT:
-                raise RuntimeError('failed to execute %r, '
+                raise RuntimeError(f'failed to execute {latexmk!r}, '
                                    'make sure the latexmk executable '
-                                   'is on your systems\' path' % latexmk)
+                                   'is on your systems\' path')
             else:
                 raise
 
@@ -98,9 +98,9 @@ def texify_compile(filename, dvips=False, view=False, options=None):
             subprocess.call(texify, startupinfo=get_startupinfo())
         except OSError as e:
             if e.errno == errno.ENOENT:
-                raise RuntimeError('failed to execute %r, '
+                raise RuntimeError(f'failed to execute {texify!r}, '
                                    'make sure the MikTeX executables '
-                                   'are on your systems\' path' % texify)
+                                   'are on your systems\' path')
             else:
                 raise
 
@@ -147,9 +147,9 @@ class Npages(object):
                 break
         else:
             tried = ' and '.join(repr(check_cmd) for check_cmd in tried)
-            raise RuntimeError('failed to execute %s, '
+            raise RuntimeError(f'failed to execute {tried}, '
                                'make sure the pdfinfo or pdftk executable '
-                               'is on your systems\' path' % tried)
+                               'is on your systems\' path')
 
         result = cls._cache = subcls()
         return result
@@ -167,9 +167,9 @@ class Npages(object):
                                              universal_newlines=True)
         except OSError as e:
             if e.errno == errno.ENOENT:
-                raise RuntimeError('failed to execute %r, '
+                raise RuntimeError(f'failed to execute {cmd!r}, '
                                    'make sure the pdfinfo or pdftk executable '
-                                   'is on your systems\' path' % cmd)
+                                   'is on your systems\' path')
             else:
                 raise
 

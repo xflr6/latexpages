@@ -46,7 +46,7 @@ class Document(object):
 
     def _include(self, filenames, two_up):
         opts = self._includepdfopts[two_up]
-        args = ','.join('%s,-' % f for f in filenames)
+        args = ','.join(f'{f},-' for f in filenames)
         return self._includepdf % (opts, args)
 
     def _document(self, two_up):

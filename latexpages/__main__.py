@@ -19,7 +19,7 @@ def main():
         description='Compiles and combines LaTeX docs into a single PDF file')
 
     parser.add_argument('--version', action='version',
-        version='%%(prog)s %s' % _version())
+                        version=f'%(prog)s {_version()}')
 
     parser.add_argument('-c', dest='engine', choices=['latexmk', 'texify'], default=None,
         help='use latexmk.pl or texify (default: guess from platform)')
@@ -35,7 +35,7 @@ def main():
 
     parser.add_argument('filename', nargs='?', default=None,
         help='INI file configuring the parts and output options '
-             '(default: %s in the current directory)' % INIFILE)
+             f'(default: {INIFILE} in the current directory)')
 
     args = parser.parse_args_default_filename()
 
@@ -48,11 +48,11 @@ def main_paginate():
         description='Computes and updates start page numbers in compiled parts and contents')
 
     parser.add_argument('--version', action='version',
-        version='%%(prog)s %s' % _version())
+                        version=f'%(prog)s {_version()}')
 
     parser.add_argument('filename', nargs='?', default=None,
         help='INI file configuring the parts and paginate options '
-             '(default: %s in the current directory)' % INIFILE)
+             f'(default: {INIFILE} in the current directory)')
 
     args = parser.parse_args_default_filename()
     paginate(args.filename)
@@ -64,14 +64,14 @@ def main_clean():
         description='Lists intermediate files to delete and deletes them on confirmation.')
 
     parser.add_argument('--version', action='version',
-        version='%%(prog)s %s' % _version())
+                        version=f'%(prog)s {_version()}')
 
     parser.add_argument('--output', dest='clean_output', action='store_true',
         help='also delete the output directory (overrides INI file)')
 
     parser.add_argument('filename', nargs='?', default=None,
         help='INI file configuring the parts and clean options '
-             '(default: %s in the current directory)' % INIFILE)
+             f'(default: {INIFILE} in the current directory)')
 
     args = parser.parse_args_default_filename()
     clean(args.filename, args.clean_output)
@@ -79,7 +79,7 @@ def main_clean():
 
 def _version():
     pkg_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    return '%s from %s (python %s)' % (__version__, pkg_dir, sys.version[:3])
+    return f'{__version__} from {pkg_dir} (python {sys.version[:3]})'
 
 
 class ArgumentParser(argparse.ArgumentParser):

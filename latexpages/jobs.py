@@ -18,7 +18,7 @@ def get_string(config, section, option, optional=False, default=None):
     if not value:
         value = default
     if not optional and not value:
-        raise ValueError('empty %s option in %s section' % (option, section))
+        raise ValueError(f'empty {option} option in {section} section')
     return value
 
 
@@ -34,7 +34,7 @@ def get_int(config, section, option, optional=False):
         value = ''
     if value != 0 and not value:
         if not optional:
-            raise ValueError('empty %s option in %s section' % (option, section))
+            raise ValueError(f'empty {option} option in {section} section')
         value = None
     else:
         value = int(value)
@@ -47,7 +47,7 @@ def get_list(config, section, option, optional=False):
     else:
         value = []
     if not optional and not value:
-        raise ValueError('empty %s option in %s section' % (option, section))
+        raise ValueError(f'empty {option} option in {section} section')
     return value
 
 
@@ -77,7 +77,7 @@ class Job(object):
     def __init__(self, filename, processes=None, engine=None, cleanup=True):
         cfg = configparser.ConfigParser()
         if not os.path.exists(filename):
-            raise ValueError('file not found: %r' % filename)
+            raise ValueError(f'file not found: {filename!r}')
         parsed = cfg.read([self._defaults, filename])
         assert len(parsed) == 2
 
@@ -91,7 +91,7 @@ class Job(object):
                 'boolean': partial(cfg.getboolean, section),
                 'items': partial(cfg.items, section),
             }
-            getattr(self, '_parse_%s' % section)(**getters)
+            getattr(self, f'_parse_{section}')(**getters)
 
         if processes is None:
             processes = self._get_int(cfg, 'compile', 'processes', optional=True)
@@ -167,7 +167,7 @@ class Job(object):
 
         target = string('contents', optional=True)
         if target:
-            self.paginate_target = os.path.join(target, '%s.tex' % target)
+            self.paginate_target = os.path.join(target, f'{target}.tex')
         else:
             self.paginate_target = ''
 
@@ -194,7 +194,7 @@ class Job(object):
 
     def to_compile(self):
         for part, _ in self._iter_parts():
-            filename = '%s.tex' % part
+            filename = f'{part}.tex'
             dvips = part in self._dvips
             yield self, part, filename, dvips
 
@@ -203,19 +203,19 @@ class Job(object):
         try:
             return to_compile[onlypart]
         except KeyError:
-            raise KeyError('Unknown part %r' % onlypart)
+            raise KeyError(f'Unknown part {onlypart!r}')
 
     def to_update(self):
         mainmatter = self._groups[1][0]
         parts = mainmatter[1:] if self._first_to_front else mainmatter
         for part in parts:
-            source = os.path.join(part, '%s.tex' % part)
-            pdf = os.path.join(part, '%s.pdf' % part)
+            source = os.path.join(part, f'{part}.tex')
+            pdf = os.path.join(part, f'{part}.pdf')
             yield source, pdf
 
     def to_copy(self):
         for part, name in self._iter_parts():
-            source = os.path.join(part, '%s.pdf' % part)
+            source = os.path.join(part, f'{part}.pdf')
             target = os.path.join(self.directory, tools.swapext(name, 'pdf'))
             yield source, target
 

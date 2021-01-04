@@ -35,7 +35,7 @@ def startpages(pattern, parts):
     result = []
     thepage = 1
     for source, pdf in parts:
-        repl = ('%d' % thepage).encode('ascii')
+        repl = (f'{thepage:d}').encode('ascii')
         differed = replace(source, pattern, repl)
         if differed:
             modified = True
@@ -54,7 +54,7 @@ def replace(filename, pattern, repl, verbose=True):
         group = match.group(0)
         result = group[:start] + repl + group[end:]
         if verbose:
-            print('%s\t%s' % (filename, result.decode('ascii')))
+            print(filename, result.decode('ascii'), sep='\t')
         return result
 
     new, subn = pattern.subn(repl_func, old, 1)
@@ -82,10 +82,10 @@ def write_contents(filename, pattern, pages, verbose=True):
         start = match.start(1) - match.start(0)
         end = match.end(1) - match.start(0)
         group = match.group(0)
-        repl = ('%d' % next(pg)).encode('ascii')
+        repl = (f'{next(pg):d}').encode('ascii')
         result = group[:start] + repl + group[end:]
         if verbose:
-            print('%s\t%s' % (filename, result.decode('ascii')))
+            print(filename, result.decode('ascii'), sep='\t')
         return result
 
     new, subn = pattern.subn(repl_func, old)
@@ -136,7 +136,7 @@ def write_contents_template(filename, pattern, template, contexts, encoding='utf
         group = match.group(0)
         result = group[:start] + repl + group[end:]
         if verbose:
-            print('%s\t%s' % (filename, result))
+            print(filename, result, sep='\t')
         return result
 
     new, subbed = pattern.subn(repl_func, old, 1)

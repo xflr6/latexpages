@@ -22,7 +22,7 @@ def swapext(filename, extension, delimiter='.'):
     name, delim, ext = filename.rpartition(delimiter)
     if not delim:
         name = ext
-    return '%s%s%s' % (name, delimiter, extension)
+    return f'{name}{delimiter}{extension}'
 
 
 def current_path(*names):
@@ -63,7 +63,7 @@ def confirm(question, default=False):
     """Prompt the user to confirm an action."""
     hint = {True: 'Y/n', False: 'y/N', None: 'y/n'}[default]
     while True:
-        answer = input('%s [%s] ' % (question, hint)).strip().lower()
+        answer = input(f'{question} [{hint}] ').strip().lower()
         if answer in ('y', 'yes'):
             return True
         elif answer in ('n', 'no'):
@@ -83,12 +83,12 @@ class NullPool(object):
 
     def __init__(self, processes=None, initializer=None):
         if processes not in (1, None):
-            raise ValueError('%s with processes=%r' % (self, processes))
+            raise ValueError(f'{self} with processes={processes!r}')
         assert initializer in (ignore_sigint, None)
 
     def map(self, func, iterable, chunksize=None):
         if chunksize not in (1, None):
-            raise ValueError('%s.map() with chunksize=%r' % (self, chunksize))
+            raise ValueError(f'{self}.map() with chunksize={chunksize!r}')
         return list(map(func, iterable))
 
     def terminate(self):
