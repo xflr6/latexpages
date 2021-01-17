@@ -40,7 +40,7 @@ class Document(object):
     _includepdfopts = {False: 'fitpaper',
                        True: 'nup=2x1,openright'}
 
-    def __init__(self, includepdfopts=None):
+    def __init__(self, *, includepdfopts=None):
         if includepdfopts is not None:
             self._includepdfopts = includepdfopts
 
@@ -61,7 +61,7 @@ class Document(object):
             yield self._pagenumbering % 'arabic'
         yield self._include(self._mainmatter, False)
 
-    def document(self, two_up=False):
+    def document(self, *, two_up=False):
         return '\n'.join(self._document(two_up))
 
 
@@ -73,7 +73,8 @@ class Source(Document, Template):
     _documentopts = {False: 'paper=a5',
                      True: 'paper=a4,landscape'}
 
-    def __init__(self, frontmatter, mainmatter, context=None, template=None,
+    def __init__(self, frontmatter, mainmatter, *,
+                 context=None, template=None,
                  includepdfopts=None, documentclass=None, documentopts=None):
         self._frontmatter = list(frontmatter)
         self._mainmatter = list(mainmatter)
@@ -84,7 +85,7 @@ class Source(Document, Template):
 
         Template.__init__(self, template)
 
-        Document.__init__(self, includepdfopts)
+        Document.__init__(self, includepdfopts=includepdfopts)
 
         if documentclass is not None:
             self._documentclass = documentclass
@@ -94,16 +95,16 @@ class Source(Document, Template):
     def __setitem__(self, key, value):
         self._context[key.upper()] = value
 
-    def source(self, two_up=False):
+    def source(self, *, two_up=False):
         context = self._context.copy()
         context['__CLASS__'] = self._documentclass
         context['__OPTIONS__'] = self._documentopts[two_up]
-        context['__DOCUMENT__'] = self.document(two_up)
+        context['__DOCUMENT__'] = self.document(two_up=two_up)
         return self.substitute(context)
 
-    def render(self, filename, two_up=False, view=False, engine=None,
+    def render(self, filename, *, two_up=False, view=False, engine=None,
                options=None, cleanup=False):
-        source = self.source(two_up)
+        source = self.source(two_up=two_up)
 
         with open(filename, 'w', encoding=self._encoding) as fd:
             fd.write(source)

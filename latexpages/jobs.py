@@ -10,7 +10,7 @@ from . import tools
 __all__ = ['Job']
 
 
-def get_string(config, section, option, optional=False, default=None):
+def get_string(config, section, option, *, optional=False, default=None):
     if config.has_option(section, option):
         value = config.get(section, option).strip()
     else:
@@ -22,12 +22,12 @@ def get_string(config, section, option, optional=False, default=None):
     return value
 
 
-def get_quoted_string(config, section, option, optional=False, default=''):
+def get_quoted_string(config, section, option, *, optional=False, default=''):
     value = get_string(config, section, option, optional=optional, default=default)
     return value.strip('"').encode('ascii').decode('unicode_escape')
 
 
-def get_int(config, section, option, optional=False):
+def get_int(config, section, option, *, optional=False):
     if config.has_option(section, option):
         value = config.get(section, option).strip()
     else:
@@ -41,7 +41,7 @@ def get_int(config, section, option, optional=False):
     return value
 
 
-def get_list(config, section, option, optional=False):
+def get_list(config, section, option, *, optional=False):
     if config.has_option(section, option):
         value = config.get(section, option).strip().split()
     else:
@@ -67,14 +67,14 @@ class Job(object):
 
     _get_list = staticmethod(get_list)
 
-    def _get_path(self, filename, default=None):
+    def _get_path(self, filename, *, default=None):
         if filename:
             filepath = os.path.join(self.config_dir, filename)
             return os.path.realpath(filepath)
         else:
             return default
 
-    def __init__(self, filename, processes=None, engine=None, cleanup=True):
+    def __init__(self, filename, *, processes=None, engine=None, cleanup=True):
         cfg = configparser.ConfigParser()
         if not os.path.exists(filename):
             raise ValueError(f'file not found: {filename!r}')
@@ -141,7 +141,7 @@ class Job(object):
         self.template = self._get_path(string('filename', optional=True))
         self.template_two_up = self._get_path(string('filename_two_up',
                                                      optional=True),
-                                              self.template)
+                                              default=self.template)
 
         self.documentclass = string('class')
 
@@ -181,7 +181,7 @@ class Job(object):
         self.clean_except = lst('except', optional=True)
         self.clean_output = boolean('output')
 
-    def _iter_parts(self, groups=None):
+    def _iter_parts(self, *, groups=None):
         if groups is None:
             groups = self._groups
         for parts, tmpl in groups:
@@ -221,8 +221,8 @@ class Job(object):
 
     def to_combine(self):
         outname = self.name
-        prelims = [name for _, name in self._iter_parts(self._groups[:1])]
-        filenames = [name for _, name in self._iter_parts(self._groups[1:-1])]
+        prelims = [name for _, name in self._iter_parts(groups=self._groups[:1])]
+        filenames = [name for _, name in self._iter_parts(groups=self._groups[1:-1])]
         if self._first_to_front:
             prelims.append(filenames.pop(0))
         yield self, outname, self.template, prelims, filenames, False
@@ -230,7 +230,7 @@ class Job(object):
         if self.make_two_up:
             outname = self.two_up
             prelims = []
-            filenames = [name for _, name in self._iter_parts(self._groups[:-1])]
+            filenames = [name for _, name in self._iter_parts(groups=self._groups[:-1])]
             yield self, outname, self.template_two_up, prelims, filenames, True
 
     def to_clean(self):

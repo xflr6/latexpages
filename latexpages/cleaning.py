@@ -10,7 +10,7 @@ from . import tools
 __all__ = ['clean']
 
 
-def clean(config, clean_output=None):
+def clean(config, *, clean_output=None):
     job = jobs.Job(config)
     with tools.chdir(job.config_dir):
         in_parts = list(matched_files(job.to_clean(), job.clean_parts, job.clean_except))
@@ -23,7 +23,7 @@ def clean(config, clean_output=None):
             msg = (f'...delete {len(in_parts)} files matched in parts'
                    f' and {len(in_output)} files removing {job.directory}?')
             if tools.confirm(msg):
-                remove(in_parts, job.directory)
+                remove(in_parts, directory=job.directory)
         elif in_parts:
             print('\n'.join(in_parts))
             if tools.confirm(f'...delete {len(in_parts)} files matched in parts?'):
@@ -55,7 +55,7 @@ def output_files(directory):
             yield os.path.join(root, f)
 
 
-def remove(files, directory=None):
+def remove(files, *, directory=None):
     for f in files:
         os.remove(f)
     if directory is not None:

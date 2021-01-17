@@ -12,9 +12,9 @@ from . import tools
 __all__ = ['make']
 
 
-def make(config, processes=None, engine=None, cleanup=True, only=None):
+def make(config, *, processes=None, engine=None, cleanup=True, only=None):
     """Compile parts, copy, and combine as instructed in config file."""
-    job = jobs.Job(config, processes, engine, cleanup)
+    job = jobs.Job(config, processes=processes, engine=engine, cleanup=cleanup)
 
     if only is not None:
         args = job.to_compile_only(only)
@@ -58,8 +58,10 @@ def combine_parts(args):
     job, outname, template, prelims, filenames, two_up = args
     with tools.chdir(job.config_dir, job.directory):
         document = pdfpages.Source(prelims, filenames,
-                                   job.context, template, job.includepdfopts,
-                                   job.documentclass, job.documentopts)
+                                   context=job.context, template=template,
+                                   includepdfopts=job.includepdfopts,
+                                   documentclass=job.documentclass,
+                                   documentopts=job.documentopts)
         document.render(tools.swapext(outname, 'tex'),
                         two_up=two_up, engine=job.engine,
                         options=job.compile_opts, cleanup=job.cleanup)

@@ -37,21 +37,21 @@ def apply(object, args=(), kwargs=None):
         return object(*args, **kwargs)
 
 
-def compile(filename, dvips=False, view=False, engine=None, options=None):
+def compile(filename, *, dvips=False, view=False, engine=None, options=None):
     """Compile LaTeX file to PDF using either latexmk.pl or texify.exe."""
     compile_funcs = {'latexmk': latexmk_compile,
                      'texify': texify_compile,
                      None: default_compile}
     if engine not in compile_funcs:
         raise ValueError(f'unknown engine: {engine!r}')
-    compile_funcs[engine](filename, dvips, view, options)
+    compile_funcs[engine](filename, dvips=dvips, view=view, options=options)
 
 
-def no_compile(filename, dvips=False, view=False, options=None):
+def no_compile(filename, *, dvips=False, view=False, options=None):
     raise NotImplementedError('platform not supported')
 
 
-def latexmk_compile(filename, dvips=False, view=False, options=None):
+def latexmk_compile(filename, *, dvips=False, view=False, options=None):
     """Compile LaTeX file with the latexmk perl script."""
     compile_dir, filename = os.path.split(filename)
 
@@ -79,7 +79,7 @@ def latexmk_compile(filename, dvips=False, view=False, options=None):
                 raise
 
 
-def texify_compile(filename, dvips=False, view=False, options=None):
+def texify_compile(filename, *, dvips=False, view=False, options=None):
     """Compile LaTeX file using MikTeX's texify utility."""
     compile_dir, filename = os.path.split(filename)
 

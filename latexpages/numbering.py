@@ -44,7 +44,7 @@ def startpages(pattern, parts):
     return modified, result
 
 
-def replace(filename, pattern, repl, verbose=True):
+def replace(filename, pattern, repl, *, verbose=True):
     with open(filename, 'rb') as fd:
         old = fd.read()
 
@@ -69,7 +69,7 @@ def replace(filename, pattern, repl, verbose=True):
         return False
 
 
-def write_contents(filename, pattern, pages, verbose=True):
+def write_contents(filename, pattern, pages, *, verbose=True):
     if not filename:
         return False
 
@@ -100,7 +100,8 @@ def write_contents(filename, pattern, pages, verbose=True):
         return False
 
 
-def template_contexts(parts, pages, author_extract, title_extract, encoding='utf-8'):
+def template_contexts(parts, pages, author_extract, title_extract, *,
+                      encoding='utf-8'):
     assert len(parts) == len(pages)
     assert author_extract and title_extract
     pat_author = re.compile(author_extract)
@@ -118,7 +119,8 @@ def template_contexts(parts, pages, author_extract, title_extract, encoding='utf
                'startpage': startpage}
 
 
-def write_contents_template(filename, pattern, template, contexts, encoding='utf-8', verbose=True):
+def write_contents_template(filename, pattern, template, contexts, *,
+                            encoding='utf-8', verbose=True):
     if not filename:
         return False
 

@@ -10,7 +10,7 @@ __all__ = ['swapext', 'current_path', 'chdir',
            'ignore_sigint', 'NullPool']
 
 
-def swapext(filename, extension, delimiter='.'):
+def swapext(filename, extension, *, delimiter='.'):
     """Return filename replacing its extension, adding if it has none.
 
     >>> swapext('spam.eggs', 'ham')
@@ -59,7 +59,7 @@ def chdir(*paths):
         os.chdir(oldwd)
 
 
-def confirm(question, default=False):
+def confirm(question, *, default=False):
     """Prompt the user to confirm an action."""
     hint = {True: 'Y/n', False: 'y/N', None: 'y/n'}[default]
     while True:
@@ -86,7 +86,7 @@ class NullPool(object):
             raise ValueError(f'{self} with processes={processes!r}')
         assert initializer in (ignore_sigint, None)
 
-    def map(self, func, iterable, chunksize=None):
+    def map(self, func, iterable, *, chunksize=None):
         if chunksize not in (1, None):
             raise ValueError(f'{self}.map() with chunksize={chunksize!r}')
         return list(map(func, iterable))
