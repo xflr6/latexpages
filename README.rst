@@ -3,6 +3,8 @@ Latexpages
 
 |PyPI version| |License| |Supported Python| |Format|
 
+|Build|
+
 This tool automates compiling LaTeX document collections (for working papers,
 proceedings, etc.) into a single combined PDF file using the pdfpages_ package.
 
@@ -363,3 +365,7 @@ License
 .. |Format| image:: https://img.shields.io/pypi/format/latexpages.svg
     :target: https://pypi.org/project/latexpages/
     :alt: Format
+
+.. |Build| image:: https://github.com/xflr6/latexpages/actions/workflows/build.yaml/badge.svg
+    :target: https://github.com/xflr6/csv23/latexpages/workflows/build.yaml?query=branch%3Amaster
+    :alt: Build

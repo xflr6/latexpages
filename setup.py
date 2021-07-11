@@ -14,6 +14,7 @@ setup(
     url='https://github.com/xflr6/latexpages',
     project_urls={
         'Issue Tracker': 'https://github.com/xflr6/latexpages/issues',
+        'CI': 'https://github.com/xflr6/latexpages/actions',
     },
     packages=find_packages(),
     entry_points={'console_scripts': [
