@@ -367,5 +367,5 @@ License
     :alt: Format
 
 .. |Build| image:: https://github.com/xflr6/latexpages/actions/workflows/build.yaml/badge.svg
-    :target: https://github.com/xflr6/latexpages/workflows/build.yaml?query=branch%3Amaster
+    :target: https://github.com/xflr6/latexpages/actions/workflows/build.yaml?query=branch%3Amaster
     :alt: Build
