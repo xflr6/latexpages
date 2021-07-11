@@ -20,9 +20,12 @@ jobs:
           - name: linux-3.6
             python-version: 3.6
             os: ubuntu-latest
+          - name: linux-pypy
+            python-version: pypy3
+            os: ubuntu-latest
     steps:
       - name: Install system dependencies
-        run: sudo apt install texlive texlive-latex-extra latexmk
+        run: sudo apt install texlive texlive-latex-extra latexmk poppler-utils
       - name: Checkout repo
         uses: actions/checkout@v2
       - name: Setup Python ${{ matrix.python-version }}
@@ -32,9 +35,16 @@ jobs:
       - name: Upgrade pip
         run: python -m pip install --upgrade pip setuptools wheel
       - name: Install dependencies
-        run: pip install .
+        run: pip install .[test]
       - name: Run tests
-        run: python make-example.py
+        run: |
+          coverage run clean-example.py
+          coverage run --append make-example.py
+          coverage run --append paginate-example.py
+          coverage report
+          coverage html
+      - name: Upload coverage
+        uses: codecov/codecov-action@v1
       - name: Upload artifacts ${{ matrix.name }}
         uses: actions/upload-artifact@v2
         with:

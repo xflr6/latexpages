@@ -3,7 +3,7 @@ Latexpages
 
 |PyPI version| |License| |Supported Python| |Format|
 
-|Build|
+|Build| |Codecov|
 
 This tool automates compiling LaTeX document collections (for working papers,
 proceedings, etc.) into a single combined PDF file using the pdfpages_ package.
@@ -369,3 +369,6 @@ License
 .. |Build| image:: https://github.com/xflr6/latexpages/actions/workflows/build.yaml/badge.svg
     :target: https://github.com/xflr6/latexpages/actions/workflows/build.yaml?query=branch%3Amaster
     :alt: Build
+.. |Codecov| image:: https://codecov.io/gh/xflr6/latexpages/branch/master/graph/badge.svg
+    :target: https://codecov.io/gh/xflr6/latexpages
+    :alt: Codecov
