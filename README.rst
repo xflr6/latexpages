@@ -366,7 +366,7 @@ License
     :target: https://pypi.org/project/latexpages/
     :alt: Format
 
-.. |Build| image:: https://github.com/xflr6/latexpages/actions/workflows/build.yaml/badge.svg
+.. |Build| image:: https://github.com/xflr6/latexpages/actions/workflows/build.yaml/badge.svg?branch=master
     :target: https://github.com/xflr6/latexpages/actions/workflows/build.yaml?query=branch%3Amaster
     :alt: Build
 .. |Codecov| image:: https://codecov.io/gh/xflr6/latexpages/branch/master/graph/badge.svg
