@@ -24,8 +24,11 @@ jobs:
           - name: linux-3.6
             python-version: 3.6
             os: ubuntu-latest
-          - name: linux-pypy
-            python-version: pypy3
+          - name: linux-pypy-3.7
+            python-version: pypy-3.7
+            os: ubuntu-latest
+          - name: linux-pypy-3.6
+            python-version: pypy-3.6
             os: ubuntu-latest
     steps:
       - name: Install system dependencies
