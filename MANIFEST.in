@@ -1,4 +1,4 @@
-include README.rst LICENSE.txt CHANGES.txt
+include README.rst LICENSE.txt CHANGES.rst
 include requirements.txt
 include clean-example.py make-example.py paginate-example.py
 recursive-include example *.cls *.ini *.tex
