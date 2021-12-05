@@ -2,8 +2,8 @@ Changelog
 =========
 
 
-Version 0.7 (in development)
-----------------------------
+Version 0.7
+-----------
 
 Drop Python 2 support.
 
