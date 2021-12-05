@@ -1,5 +1,3 @@
-# latexpages - compile and combine latex docs into a single file
-
 """Combine a collection of LaTeX documents into a single PDF file."""
 
 from .cleaning import clean

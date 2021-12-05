@@ -1,6 +1,4 @@
-# __main__.py - entry points for the latexpages commands
-
-"""Command-line interface."""
+"""Entry points for command-line interface."""
 
 import argparse
 import os

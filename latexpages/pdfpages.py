@@ -1,4 +1,4 @@
-# pdfpages.py - concatenate pdf files with the latex pdfpages package
+"""Concatenate pdf files with the latex pdfpages package."""
 
 import glob
 import os

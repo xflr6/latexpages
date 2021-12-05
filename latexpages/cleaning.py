@@ -1,4 +1,4 @@
-# cleaning.py - remove intermediate and/or output files
+"""Remove intermediate and/or output files."""
 
 from fnmatch import fnmatch
 import os

@@ -1,4 +1,4 @@
-# jobs.py - parse .ini-style config file into function call args
+"""Parse .ini-style config file into function call args."""
 
 import configparser
 from functools import partial

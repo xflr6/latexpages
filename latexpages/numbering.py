@@ -1,4 +1,4 @@
-# numbering.py - update start pages, update table of contents (8-bit safe)
+"""Update start pages, update table of contents (8-bit safe)."""
 
 import re
 import string

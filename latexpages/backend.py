@@ -1,4 +1,4 @@
-# backend.py - compile LaTeX to PDF, optionally open in viewer, count PDF pages
+"""Compile LaTeX to PDF, optionally open in viewer, count PDF pages."""
 
 import errno
 import os

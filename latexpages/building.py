@@ -1,4 +1,4 @@
-# building.py - compile parts, copy to output, combine, combine two_up
+"""Compile parts, copy to output, combine, combine two_up."""
 
 import multiprocessing
 import os

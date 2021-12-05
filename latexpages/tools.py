@@ -1,4 +1,4 @@
-# tools.py - path and filename manipulations
+"""Generic path and filename manipulations."""
 
 import contextlib
 import os
