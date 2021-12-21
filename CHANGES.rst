@@ -2,8 +2,8 @@ Changelog
 =========
 
 
-Version 0.7.1 (in development)
-------------------------------
+Version 0.7.1
+-------------
 
 Fix broken main invovation from `make() takes 1 positional argument but 5 were given`.
 
