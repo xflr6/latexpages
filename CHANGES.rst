@@ -5,7 +5,7 @@ Changelog
 Version 0.7.1 (in development)
 ------------------------------
 
-
+Fix broken main invovation from `make() takes 1 positional argument but 5 were given`.
 
 
 Version 0.7

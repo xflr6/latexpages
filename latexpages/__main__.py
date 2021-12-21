@@ -37,7 +37,11 @@ def main():
 
     args = parser.parse_args_default_filename()
 
-    make(args.filename, args.processes, args.engine, args.cleanup, args.only)
+    make(args.filename,
+         processes=args.processes,
+         engine=args.engine,
+         cleanup=args.cleanup,
+         only=args.only)
 
 
 def main_paginate():
@@ -72,7 +76,7 @@ def main_clean():
              f'(default: {INIFILE} in the current directory)')
 
     args = parser.parse_args_default_filename()
-    clean(args.filename, args.clean_output)
+    clean(args.filename, clean_output=args.clean_output)
 
 
 def _version():
