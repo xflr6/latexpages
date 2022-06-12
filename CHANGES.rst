@@ -2,8 +2,8 @@ Changelog
 =========
 
 
-Version 0.7.2 (in development)
-------------------------------
+Version 0.7.2
+-------------
 
 Drop Python 3.6 support.
 
