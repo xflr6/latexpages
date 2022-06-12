@@ -23,6 +23,7 @@ jobs:
             os: ubuntu-latest
           - name: linux-pypy-3.9
             python-version: pypy-3.9
+            os: ubuntu-latest
           - name: linux-pypy-3.8
             python-version: pypy-3.8
             os: ubuntu-latest
