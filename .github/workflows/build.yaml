@@ -63,7 +63,7 @@ jobs:
           coverage report
           coverage html
       - name: Upload coverage
-        uses: codecov/codecov-action@v1
+        uses: codecov/codecov-action@v3
       - name: Upload artifacts ${{ matrix.name }}
         uses: actions/upload-artifact@v3
         with:
