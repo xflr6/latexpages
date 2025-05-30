@@ -1,7 +1,7 @@
 Latexpages
 ==========
 
-|PyPI version| |License| |Supported Python| |Wheel|
+|PyPI version| |License| |Supported Python| |Downloads|
 
 |Build| |Codecov|
 
@@ -362,8 +362,9 @@ License
 .. |Supported Python| image:: https://img.shields.io/pypi/pyversions/latexpages.svg
     :target: https://pypi.org/project/latexpages/
     :alt: Supported Python Versions
-.. |Wheel| image:: https://img.shields.io/pypi/wheel/latexpages.svg
-    :target: https://pypi.org/project/latexpages/#files
+.. |Downloads| image:: https://img.shields.io/pypi/dm/latexpages.svg
+    :target: https://pypistats.org/packages/latexpages
+    :alt: Monthly downloads
 
 .. |Build| image:: https://github.com/xflr6/latexpages/actions/workflows/build.yaml/badge.svg?branch=master
     :target: https://github.com/xflr6/latexpages/actions/workflows/build.yaml?query=branch%3Amaster
