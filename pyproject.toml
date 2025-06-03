@@ -36,7 +36,7 @@ latexpages-clean = "latexpages.__main__:main_clean"
 
 [project.optional-dependencies]
 dev = ["build", "wheel", "twine", "flake8", "Flake8-pyproject", "pep8-naming"]
-test = ["coverage"]
+test = ["coverage[toml]"]
 
 [build-system]
 requires = ["setuptools"]
