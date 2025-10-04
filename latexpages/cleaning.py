@@ -1,6 +1,8 @@
 """Remove intermediate and/or output files."""
 
-from fnmatch import fnmatch
+from collections.abc import Iterable, Iterator, Sequence
+import fnmatch
+import functools
 import os
 import shutil
 
@@ -10,7 +12,7 @@ from . import tools
 __all__ = ['clean']
 
 
-def clean(config, *, clean_output=None):
+def clean(config, *, clean_output: bool | None = None) -> None:
     job = jobs.Job(config)
     with tools.chdir(job.config_dir):
         in_parts = list(matched_files(job.to_clean(), job.clean_parts, job.clean_except))
@@ -30,7 +32,9 @@ def clean(config, *, clean_output=None):
                 remove(in_parts)
 
 
-def matched_files(dirs, patterns, except_patterns):
+def matched_files(dirs: Sequence[os.PathLike[str] | str],
+                  patterns: Sequence[str],
+                  except_patterns: Sequence[str]) -> Iterator[str]:
     for d in dirs:
         if os.path.isabs(d):
             raise ValueError(f'non-relative path: {d!r}')
@@ -40,13 +44,14 @@ def matched_files(dirs, patterns, except_patterns):
             if not os.path.isfile(path):
                 continue
 
-            match = any(fnmatch(path, p) for p in patterns)
-            match = match and not any(fnmatch(path, e) for e in except_patterns)
+            path_matches = functools.partial(fnmatch.fnmatch, path)
+            match = (any(map(path_matches, patterns))
+                     and not any(map(path_matches, except_patterns)))
             if match:
                 yield path
 
 
-def output_files(directory):
+def output_files(directory: os.PathLike[str] | str) -> Iterator[str]:
     if os.path.isabs(directory):
         raise ValueError(f'non-relative path: {directory!r}')
 
@@ -55,7 +60,8 @@ def output_files(directory):
             yield os.path.join(root, f)
 
 
-def remove(files, *, directory=None):
+def remove(files: Sequence[os.PathLike[str] | str], *,
+           directory: os.PathLike[str] | str | None = None) -> None:
     for f in files:
         os.remove(f)
     if directory is not None:

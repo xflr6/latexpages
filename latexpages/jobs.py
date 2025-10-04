@@ -1,7 +1,7 @@
 """Parse .ini-style config file into function call args."""
 
 import configparser
-from functools import partial
+import functools
 import os
 import shlex
 
@@ -10,7 +10,8 @@ from . import tools
 __all__ = ['Job']
 
 
-def get_string(config, section, option, *, optional=False, default=None):
+def get_string(config, section, option, *,
+               optional=False, default=None) -> str:
     if config.has_option(section, option):
         value = config.get(section, option).strip()
     else:
@@ -22,12 +23,14 @@ def get_string(config, section, option, *, optional=False, default=None):
     return value
 
 
-def get_quoted_string(config, section, option, *, optional=False, default=''):
+def get_quoted_string(config, section, option, *,
+                      optional: bool = False, default: str = '') -> str:
     value = get_string(config, section, option, optional=optional, default=default)
     return value.strip('"').encode('ascii').decode('unicode_escape')
 
 
-def get_int(config, section, option, *, optional=False):
+def get_int(config, section, option, *,
+            optional: bool = False) -> int:
     if config.has_option(section, option):
         value = config.get(section, option).strip()
     else:
@@ -41,7 +44,8 @@ def get_int(config, section, option, *, optional=False):
     return value
 
 
-def get_list(config, section, option, *, optional=False):
+def get_list(config, section, option, *,
+             optional: bool = False):
     if config.has_option(section, option):
         value = config.get(section, option).strip().split()
     else:
@@ -74,7 +78,8 @@ class Job(object):
         else:
             return default
 
-    def __init__(self, filename, *, processes=None, engine=None, cleanup=True):
+    def __init__(self, filename, *,
+                 processes=None, engine=None, cleanup=True) -> None:
         cfg = configparser.ConfigParser()
         if not os.path.exists(filename):
             raise ValueError(f'file not found: {filename!r}')
@@ -83,6 +88,7 @@ class Job(object):
 
         self.config_dir = os.path.dirname(filename)
 
+        partial = functools.partial
         for section in self._sections:
             getters = {
                 'string': partial(self._get_string, cfg, section),

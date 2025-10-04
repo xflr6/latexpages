@@ -1,5 +1,6 @@
 """Update start pages, update table of contents (8-bit safe)."""
 
+import os
 import re
 import string
 
@@ -10,7 +11,7 @@ from . import tools
 __all__ = ['paginate']
 
 
-def paginate(config):
+def paginate(config) -> bool:
     """Compute and update start page numbers as instructed in config file."""
     job = jobs.Job(config)
     with tools.chdir(job.config_dir):
@@ -28,7 +29,7 @@ def paginate(config):
     return updated or changed
 
 
-def startpages(pattern, parts):
+def startpages(pattern: str, parts):
     npages = backend.Npages.get_func()
     pattern = re.compile(pattern.encode('ascii'))
     modified = False
@@ -44,7 +45,8 @@ def startpages(pattern, parts):
     return modified, result
 
 
-def replace(filename, pattern, repl, *, verbose=True):
+def replace(filename: os.PathLike[str] | str, pattern: str, repl: str, *,
+            verbose: bool = True) -> bool:
     with open(filename, 'rb') as fd:
         old = fd.read()
 
@@ -69,7 +71,8 @@ def replace(filename, pattern, repl, *, verbose=True):
         return False
 
 
-def write_contents(filename, pattern, pages, *, verbose=True):
+def write_contents(filename: str, pattern: str, pages, *,
+                   verbose: bool = True) -> bool:
     if not filename:
         return False
 
@@ -101,12 +104,12 @@ def write_contents(filename, pattern, pages, *, verbose=True):
 
 
 def template_contexts(parts, pages, author_extract, title_extract, *,
-                      encoding='utf-8'):
+                      encoding: str = 'utf-8'):
     assert len(parts) == len(pages)
     assert author_extract and title_extract
     pat_author = re.compile(author_extract)
     pat_title = re.compile(title_extract)
-    for (source, pdf), startpage in zip(parts, pages):
+    for (source, pdf), startpage in zip(parts, pages, strict=True):
         with open(source, encoding=encoding) as fd:
             data = fd.read()
         author = title = ''
@@ -119,8 +122,9 @@ def template_contexts(parts, pages, author_extract, title_extract, *,
                'startpage': startpage}
 
 
-def write_contents_template(filename, pattern, template, contexts, *,
-                            encoding='utf-8', verbose=True):
+def write_contents_template(filename: str, pattern: str, template, contexts, *,
+                            encoding: str = 'utf-8',
+                            verbose: bool = True) -> bool:
     if not filename:
         return False
 

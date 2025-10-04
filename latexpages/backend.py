@@ -37,7 +37,8 @@ def apply(object, args=(), kwargs=None):
         return object(*args, **kwargs)
 
 
-def compile(filename, *, dvips=False, view=False, engine=None, options=None):
+def compile(filename, *,
+            dvips=False, view=False, engine=None, options=None) -> None:
     """Compile LaTeX file to PDF using either latexmk.pl or texify.exe."""
     compile_funcs = {'latexmk': latexmk_compile,
                      'texify': texify_compile,
@@ -47,11 +48,13 @@ def compile(filename, *, dvips=False, view=False, engine=None, options=None):
     compile_funcs[engine](filename, dvips=dvips, view=view, options=options)
 
 
-def no_compile(filename, *, dvips=False, view=False, options=None):
+def no_compile(filename, *,
+               dvips=False, view=False, options=None) -> None:
     raise NotImplementedError('platform not supported')
 
 
-def latexmk_compile(filename, *, dvips=False, view=False, options=None):
+def latexmk_compile(filename, *,
+                    dvips=False, view=False, options=None) -> None:
     """Compile LaTeX file with the latexmk perl script."""
     compile_dir, filename = os.path.split(filename)
 
@@ -79,7 +82,8 @@ def latexmk_compile(filename, *, dvips=False, view=False, options=None):
                 raise
 
 
-def texify_compile(filename, *, dvips=False, view=False, options=None):
+def texify_compile(filename, *,
+                   dvips=False, view=False, options=None) -> None:
     """Compile LaTeX file using MikTeX's texify utility."""
     compile_dir, filename = os.path.split(filename)
 
@@ -154,10 +158,10 @@ class Npages(object):
         result = cls._cache = subcls()
         return result
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.pattern = re.compile(self.result_pattern, re.MULTILINE)
 
-    def __call__(self, filename):
+    def __call__(self, filename) -> int:
         """Return the number of pages of a PDF by asking pdfinfo/pdftk."""
         cmd = self.make_cmd(filename)
         try:

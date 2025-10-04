@@ -1,5 +1,6 @@
 """Generic path and filename manipulations."""
 
+from collections.abc import Iterator
 import contextlib
 import os
 import signal
@@ -10,7 +11,7 @@ __all__ = ['swapext', 'current_path', 'chdir',
            'ignore_sigint', 'NullPool']
 
 
-def swapext(filename, extension, *, delimiter='.'):
+def swapext(filename: str, extension: str, *, delimiter: str = '.') -> str:
     """Return filename replacing its extension, adding if it has none.
 
     >>> swapext('spam.eggs', 'ham')
@@ -25,7 +26,7 @@ def swapext(filename, extension, *, delimiter='.'):
     return f'{name}{delimiter}{extension}'
 
 
-def current_path(*names):
+def current_path(*names: os.PathLike[str] | str) -> str:
     """Return the path to names relative to the current module."""
     depth = 0 if __name__ == '__main__' else 1
 
@@ -43,7 +44,7 @@ def current_path(*names):
 
 
 @contextlib.contextmanager
-def chdir(*paths):
+def chdir(*paths: os.PathLike[str] | str) -> Iterator[str | None]:
     """Change the current working directory, restore on context exit."""
     paths = [p if p is not None else '' for p in paths]
     path = os.path.join(*paths)
@@ -59,7 +60,7 @@ def chdir(*paths):
         os.chdir(oldwd)
 
 
-def confirm(question, *, default=False):
+def confirm(question: str, *, default=False) -> None:
     """Prompt the user to confirm an action."""
     hint = {True: 'Y/n', False: 'y/N', None: 'y/n'}[default]
     while True:
@@ -73,7 +74,7 @@ def confirm(question, *, default=False):
         print("Please answer '(y)es' or '(n)o'.")
 
 
-def ignore_sigint():
+def ignore_sigint() -> None:
     """Ignore KeyboardInterrupt, initializer for multiprocessing.Pool."""
     signal.signal(signal.SIGINT, signal.SIG_IGN)
 
@@ -83,12 +84,12 @@ class NullPool(object):
 
     def __init__(self, processes=None, initializer=None):
         if processes not in (1, None):
-            raise ValueError(f'{self} with processes={processes!r}')
+            raise ValueError(f'{self} with {processes=}')
         assert initializer in (ignore_sigint, None)
 
     def map(self, func, iterable, *, chunksize=None):
         if chunksize not in (1, None):
-            raise ValueError(f'{self}.map() with chunksize={chunksize!r}')
+            raise ValueError(f'{self}.map() with {chunksize=}')
         return list(map(func, iterable))
 
     def terminate(self):

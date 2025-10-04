@@ -17,7 +17,7 @@ class Template(object):
 
     _encoding = 'utf-8'
 
-    def __init__(self, filename=None):
+    def __init__(self, filename=None) -> None:
         if filename is None:
             filename = self._filename
 
@@ -26,7 +26,7 @@ class Template(object):
 
         self._template = string.Template(data)
 
-    def substitute(self, context):
+    def substitute(self, context) -> str:
         return self._template.safe_substitute(context)
 
 
@@ -40,7 +40,7 @@ class Document(object):
     _includepdfopts = {False: 'fitpaper',
                        True: 'nup=2x1,openright'}
 
-    def __init__(self, *, includepdfopts=None):
+    def __init__(self, *, includepdfopts=None) -> None:
         if includepdfopts is not None:
             self._includepdfopts = includepdfopts
 
@@ -61,7 +61,7 @@ class Document(object):
             yield self._pagenumbering % 'arabic'
         yield self._include(self._mainmatter, False)
 
-    def document(self, *, two_up=False):
+    def document(self, *, two_up: bool = False) -> str:
         return '\n'.join(self._document(two_up))
 
 
@@ -75,7 +75,9 @@ class Source(Document, Template):
 
     def __init__(self, frontmatter, mainmatter, *,
                  context=None, template=None,
-                 includepdfopts=None, documentclass=None, documentopts=None):
+                 includepdfopts=None,
+                 documentclass=None,
+                 documentopts=None) -> None:
         self._frontmatter = list(frontmatter)
         self._mainmatter = list(mainmatter)
 
@@ -92,10 +94,10 @@ class Source(Document, Template):
         if documentopts is not None:
             self._documentopts = documentopts
 
-    def __setitem__(self, key, value):
+    def __setitem__(self, key, value) -> None:
         self._context[key.upper()] = value
 
-    def source(self, *, two_up=False):
+    def source(self, *, two_up: bool = False) -> str:
         context = self._context.copy()
         context['__CLASS__'] = self._documentclass
         context['__OPTIONS__'] = self._documentopts[two_up]
@@ -103,7 +105,7 @@ class Source(Document, Template):
         return self.substitute(context)
 
     def render(self, filename, *, two_up=False, view=False, engine=None,
-               options=None, cleanup=False):
+               options=None, cleanup: bool = False) -> None:
         source = self.source(two_up=two_up)
 
         with open(filename, 'w', encoding=self._encoding) as fd:
@@ -114,7 +116,7 @@ class Source(Document, Template):
         if cleanup:
             self.cleanup(filename)
 
-    def cleanup(self, filename):
+    def cleanup(self, filename) -> None:
         namefiles = glob.glob(tools.swapext(filename, '*'))
         remove = set(namefiles) - {tools.swapext(filename, 'pdf')}
         for filename in remove:

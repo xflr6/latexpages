@@ -12,7 +12,8 @@ from . import tools
 __all__ = ['make']
 
 
-def make(config, *, processes=None, engine=None, cleanup=True, only=None):
+def make(config, *,
+         processes=None, engine=None, cleanup=True, only=None) -> None:
     """Compile parts, copy, and combine as instructed in config file."""
     job = jobs.Job(config, processes=processes, engine=engine, cleanup=cleanup)
 
@@ -36,7 +37,7 @@ def make(config, *, processes=None, engine=None, cleanup=True, only=None):
         pool.join()
 
 
-def compile_part(args):
+def compile_part(args) -> None:
     """Compile part LaTeX document to PDF."""
     job, part, filename, dvips = args
     with tools.chdir(job.config_dir, part):
@@ -44,7 +45,7 @@ def compile_part(args):
                         options=job.compile_opts)
 
 
-def copy_parts(job):
+def copy_parts(job) -> None:
     """Copy part PDFs to the output directory."""
     with tools.chdir(job.config_dir):
         if not os.path.isdir(job.directory):
@@ -53,7 +54,7 @@ def copy_parts(job):
             shutil.copyfile(source, target)
 
 
-def combine_parts(args):
+def combine_parts(args) -> None:
     """Combine output PDFs with pdfpages."""
     job, outname, template, prelims, filenames, two_up = args
     with tools.chdir(job.config_dir, job.directory):

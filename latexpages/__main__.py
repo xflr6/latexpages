@@ -11,7 +11,7 @@ __all__ = ['main', 'main_paginate', 'main_clean']
 INIFILE = 'latexpages.ini'
 
 
-def main():
+def main() -> None:
     """Run the command-line interface."""
     parser = ArgumentParser(prog='latexpages',
         description='Compiles and combines LaTeX docs into a single PDF file')
@@ -44,7 +44,7 @@ def main():
          only=args.only)
 
 
-def main_paginate():
+def main_paginate() -> None:
     """Run the command-line interface for the paginate utility."""
     parser = ArgumentParser(prog='latexpages-paginate',
         description='Computes and updates start page numbers in compiled parts and contents')
@@ -60,7 +60,7 @@ def main_paginate():
     paginate(args.filename)
 
 
-def main_clean():
+def main_clean() -> None:
     """Run the command-line interface for the clean utility."""
     parser = ArgumentParser(prog='latexpages-clean',
         description='Lists intermediate files to delete and deletes them on confirmation.')
@@ -79,7 +79,7 @@ def main_clean():
     clean(args.filename, clean_output=args.clean_output)
 
 
-def _version():
+def _version() -> str:
     pkg_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     return f'{__version__} from {pkg_dir} (python {sys.version[:3]})'
 
