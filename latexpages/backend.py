@@ -1,5 +1,6 @@
 """Compile LaTeX to PDF, optionally open in viewer, count PDF pages."""
 
+from collections.abc import Callable, Sequence
 import errno
 import os
 import platform
@@ -127,6 +128,10 @@ def default_compile(platform=PLATFORM):
 
 
 class Npages(object):
+
+    check_cmd: Sequence[str]
+    make_cmd: Callable[[str], Sequence[str]]
+    result_pattern: str
 
     _cache = None
 

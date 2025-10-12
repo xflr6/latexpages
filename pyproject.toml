@@ -35,7 +35,7 @@ latexpages-paginate = "latexpages.__main__:main_paginate"
 latexpages-clean = "latexpages.__main__:main_clean"
 
 [project.optional-dependencies]
-dev = ["build", "wheel", "twine", "flake8", "Flake8-pyproject", "pep8-naming"]
+dev = ["build", "wheel", "twine", "mypy", "flake8", "Flake8-pyproject", "pep8-naming"]
 test = ["coverage[toml]"]
 
 [build-system]
@@ -50,6 +50,9 @@ latexpages = ["template.tex", "settings.ini"]
 
 [tool.setuptools.dynamic]
 version = {attr = "latexpages.__version__"}
+
+[tool.mypy]
+packages = ["latexpages"]
 
 [tool.flake8]
 exclude = [".tox"]

@@ -9,7 +9,7 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - name: linux-3.14
+          - name: linux-3.14-typecheck
             python-version: "3.14"
             os: ubuntu-latest
           - name: linux-3.13
@@ -52,9 +52,18 @@ jobs:
           echo "::group::Run python -m pip install --upgrade pip setuptools wheel"
           python -m pip install --upgrade pip setuptools wheel
           echo "::endgroup::"
-          echo "::group::Run pip install .[test]"
-          pip install .[test]
+          echo "::group::Run pip install .[test] mypy"
+          pip install .[test] mypy
           echo "::endgroup::"
+      - name: Run mypy (if -typecheck)
+        if: ${{ contains(matrix.name, '-typecheck') }}
+        run: |
+          echo "::group::Run mypy"
+          FAILED=0
+          python -m mypy || FAILED=$?
+          echo "::endgroup::"
+          [ $FAILED -eq 0 ] || echo "::warning::mypy failed with exit code $FAILED"
+        shell: bash
       - name: Run clean-example.py, make-example.py and paginate-example.py
         run: |
           coverage run clean-example.py

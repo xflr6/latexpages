@@ -44,23 +44,24 @@ def current_path(*names: os.PathLike[str] | str) -> str:
 
 
 @contextlib.contextmanager
-def chdir(*paths: os.PathLike[str] | str) -> Iterator[str | None]:
+def chdir(*paths: os.PathLike[str] | str | None) -> Iterator[str | None]:
     """Change the current working directory, restore on context exit."""
-    paths = [p if p is not None else '' for p in paths]
-    path = os.path.join(*paths)
+    path_parts: list[os.PathLike[str] | str]
+    path_parts= [p if p is not None else '' for p in paths]
+    path = os.path.join(*path_parts)
     if not path:
-        yield
+        yield None
         return
 
     oldwd = os.getcwd()
     os.chdir(path)
     try:
-        yield path
+        yield os.fspath(path)
     finally:
         os.chdir(oldwd)
 
 
-def confirm(question: str, *, default=False) -> None:
+def confirm(question: str, *, default: bool = False) -> bool:
     """Prompt the user to confirm an action."""
     hint = {True: 'Y/n', False: 'y/N', None: 'y/n'}[default]
     while True:
