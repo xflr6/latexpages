@@ -59,7 +59,7 @@ def no_compile(filename, *,
 def latexmk_compile(filename, *,
                     dvips=False, view=False, options=None) -> None:
     """Compile LaTeX file with the latexmk perl script."""
-    compile_dir, filename = os.path.split(filename)
+    (compile_dir, filename) = os.path.split(filename)
 
     if options is None:
         options = OPTS
@@ -88,7 +88,7 @@ def latexmk_compile(filename, *,
 def texify_compile(filename, *,
                    dvips=False, view=False, options=None) -> None:
     """Compile LaTeX file using MikTeX's texify utility."""
-    compile_dir, filename = os.path.split(filename)
+    (compile_dir, filename) = os.path.split(filename)
 
     if options is None:
         options = OPTS

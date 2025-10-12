@@ -16,7 +16,7 @@ def paginate(config) -> bool:
     job = jobs.Job(config)
     with tools.chdir(job.config_dir):
         parts = list(job.to_update())
-        updated, pages = startpages(job.paginate_update, parts)
+        (updated, pages) = startpages(job.paginate_update, parts)
         if job.paginate_template:
             contexts = list(template_contexts(parts, pages,
                                               job.paginate_author_extract,
@@ -59,7 +59,7 @@ def replace(filename: os.PathLike[str] | str, pattern: re.Pattern[bytes], repl: 
             print(filename, result.decode('ascii'), sep='\t')
         return result
 
-    new, subn = pattern.subn(repl_func, old, 1)
+    (new, subn) = pattern.subn(repl_func, old, 1)
     if not subn:
         raise RuntimeError
 
@@ -91,7 +91,7 @@ def write_contents(filename: str, pattern_: str, /, pages, *,
             print(filename, result.decode('ascii'), sep='\t')
         return result
 
-    new, subn = pattern.subn(repl_func, old)
+    (new, subn) = pattern.subn(repl_func, old)
     if subn != len(pages):
         raise RuntimeError
 
@@ -145,7 +145,7 @@ def write_contents_template(filename: str, pattern_: str, /, template, contexts,
             print(filename, result, sep='\t')
         return result
 
-    new, subbed = pattern.subn(repl_func, old, 1)
+    (new, subbed) = pattern.subn(repl_func, old, 1)
     if not subbed:
         raise RuntimeError
 

@@ -35,6 +35,7 @@ class Document(object):
     r"""Document body with \includepdfmerge commands."""
 
     _frontmatter: Sequence[str]
+
     _mainmatter: Sequence[str]
 
     _pagenumbering = r'\pagenumbering{%s}'

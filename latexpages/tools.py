@@ -20,7 +20,7 @@ def swapext(filename: str, extension: str, *, delimiter: str = '.') -> str:
     >>> swapext('spam', 'ham')
     'spam.ham'
     """
-    name, delim, ext = filename.rpartition(delimiter)
+    (name, delim, ext) = filename.rpartition(delimiter)
     if not delim:
         name = ext
     return f'{name}{delimiter}{extension}'
@@ -47,7 +47,7 @@ def current_path(*names: os.PathLike[str] | str) -> str:
 def chdir(*paths: os.PathLike[str] | str | None) -> Iterator[str | None]:
     """Change the current working directory, restore on context exit."""
     path_parts: list[os.PathLike[str] | str]
-    path_parts= [p if p is not None else '' for p in paths]
+    path_parts = [p if p is not None else '' for p in paths]
     path = os.path.join(*path_parts)
     if not path:
         yield None

@@ -39,7 +39,7 @@ def make(config, *,
 
 def compile_part(args) -> None:
     """Compile part LaTeX document to PDF."""
-    job, part, filename, dvips = args
+    (job, part, filename, dvips) = args
     with tools.chdir(job.config_dir, part):
         backend.compile(filename, dvips=dvips, engine=job.engine,
                         options=job.compile_opts)
@@ -56,7 +56,7 @@ def copy_parts(job) -> None:
 
 def combine_parts(args) -> None:
     """Combine output PDFs with pdfpages."""
-    job, outname, template, prelims, filenames, two_up = args
+    (job, outname, template, prelims, filenames, two_up) = args
     with tools.chdir(job.config_dir, job.directory):
         document = pdfpages.Source(prelims, filenames,
                                    context=job.context, template=template,
