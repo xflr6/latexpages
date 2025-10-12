@@ -6,6 +6,7 @@ import os
 import platform
 import re
 import subprocess
+import sys
 
 from . import tools
 
@@ -19,7 +20,8 @@ OPTS = {'latexmk': ['-silent'],
         'ps2pdf': []}
 
 
-if PLATFORM == 'windows':
+# avoid platform.system() to work around https://github.com/python/mypy/issues/8166
+if sys.platform == 'win32' or sys.platform == 'cygwin' or sys.platform == 'msys':  # pragma: no cover  # noqa: E501
     def get_startupinfo():
         """Return subprocess.STARTUPINFO instance hiding the console window."""
         startupinfo = subprocess.STARTUPINFO()
