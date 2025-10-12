@@ -2,8 +2,10 @@ Changelog
 =========
 
 
-Version 0.7.3 (in development)
-------------------------------
+Version 0.8
+-----------
+
+Switch to pyproject.toml.
 
 Drop Python 3.7, 3.8 and 3.9 support.
 
