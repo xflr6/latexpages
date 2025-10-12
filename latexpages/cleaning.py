@@ -1,6 +1,6 @@
 """Remove intermediate and/or output files."""
 
-from collections.abc import Iterable, Iterator, Sequence
+from collections.abc import Iterator, Sequence
 import fnmatch
 import functools
 import os

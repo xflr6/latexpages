@@ -32,9 +32,9 @@ else:
 
 
 def apply(object, args=(), kwargs=None):
-        if kwargs is None:
-            kwargs = {}
-        return object(*args, **kwargs)
+    if kwargs is None:
+        kwargs = {}
+    return object(*args, **kwargs)
 
 
 def compile(filename, *,
