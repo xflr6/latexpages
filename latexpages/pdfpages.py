@@ -1,5 +1,6 @@
 """Concatenate pdf files with the latex pdfpages package."""
 
+from collections.abc import Sequence
 import glob
 import os
 import string
@@ -32,6 +33,9 @@ class Template(object):
 
 class Document(object):
     r"""Document body with \includepdfmerge commands."""
+
+    _frontmatter: Sequence[str]
+    _mainmatter: Sequence[str]
 
     _pagenumbering = r'\pagenumbering{%s}'
 

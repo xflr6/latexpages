@@ -155,8 +155,8 @@ class Npages(object):
             else:
                 break
         else:
-            tried = ' and '.join(repr(check_cmd) for check_cmd in tried)
-            raise RuntimeError(f'failed to execute {tried}, '
+            tried_msg = ' and '.join(repr(check_cmd) for check_cmd in tried)
+            raise RuntimeError(f'failed to execute {tried_msg}, '
                                'make sure the pdfinfo or pdftk executable '
                                'is on your systems\' path')
 
