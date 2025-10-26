@@ -26,17 +26,15 @@ classifiers = [
 
 [project.urls]
 Homepage = "https://github.com/xflr6/latexpages"
+Changelog = "https://github.com/xflr6/latexpages/blob/master/CHANGES.rst"
 "Issue Tracker" = "https://github.com/xflr6/latexpages/issues"
 CI = "https://github.com/xflr6/latexpages/actions"
+Coverage = "https://app.codecov.io/gh/xflr6/latexpages"
 
 [project.scripts]
 latexpages = "latexpages.__main__:main"
 latexpages-paginate = "latexpages.__main__:main_paginate"
 latexpages-clean = "latexpages.__main__:main_clean"
-
-[project.optional-dependencies]
-dev = ["build", "wheel", "twine", "mypy", "flake8", "Flake8-pyproject", "pep8-naming"]
-test = ["coverage[toml]"]
 
 [build-system]
 requires = ["setuptools"]
@@ -50,6 +48,27 @@ latexpages = ["template.tex", "settings.ini"]
 
 [tool.setuptools.dynamic]
 version = {attr = "latexpages.__version__"}
+
+[dependency-groups]
+dev = [  # $ pip install -e . --group dev
+  "build",
+  "twine",
+  "wheel",
+  { include-group = "lint" },
+  { include-group = "test" },
+  { include-group = "typing" },
+]
+lint = [
+  "flake8",
+  "Flake8-pyproject",
+  "pep8-naming",
+]
+test = [
+  "coverage[toml]"
+]
+typing = [
+  "mypy",
+]
 
 [tool.mypy]
 packages = ["latexpages"]
