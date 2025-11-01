@@ -11,7 +11,9 @@ Version 0.8.1 (in development)
 Version 0.8
 -----------
 
-Switch to pyproject.toml.
+Switch project to ``pyproject.toml`` and build to ``python -m build``)
+(https://build.pypa.io). This changes the source distribution format from
+``.zip`` to PEP 625 compliant ``.tar.gz`` (https://peps.python.org/pep-0625/).
 
 Drop Python 3.7, 3.8 and 3.9 support.
 
@@ -27,7 +29,7 @@ Drop Python 3.6 support.
 Version 0.7.1
 -------------
 
-Fix broken main invovation from `make() takes 1 positional argument but 5 were given`.
+Fix broken main invovation from ``make() takes 1 positional argument but 5 were given``.
 
 
 Version 0.7
@@ -111,7 +113,7 @@ Version 0.5.1
 
 Fixed broken Python 3 compatibility.
 
-Adapted clean command for make-like invocation.
+Adapted clean command for ``make``-like invocation.
 
 Made author and title extraction regex for wip contents creation feature
 configurable and compatible with optional arguments.
