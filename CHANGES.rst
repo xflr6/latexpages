@@ -5,7 +5,7 @@ Changelog
 Version 0.8.1 (in development)
 ------------------------------
 
-
+Fix Python version reported in ``--version`` output.
 
 
 Version 0.8
